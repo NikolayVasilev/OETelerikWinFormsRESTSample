@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<libraryinfo path="C:/oeworkspace/OETelerikWinFormsRESTSample/SportsData/AppServer" type="PathEntry" ModificationStamp="1587572940541" FullName="AppServer" lib_header_magic_number="2384638594569" lib_header_version="15">
+	<procedures>
+	</procedures>
+	<classes>
+		<pacakage name="">
+			<class name="Customer" SourceFilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/SportsData/AppServer/Customer.cls" RfilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/SportsData/AppServer/Customer.r" Abstract="false" Final="false" isInterface="false" isSerializable="false" SuperClassName="OpenEdge.BusinessLogic.BusinessEntity" InterfaceNames="" ImportedPackages=""></class>
+		</pacakage>
+	</classes>
+</libraryinfo>

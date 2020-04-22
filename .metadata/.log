@@ -1,0 +1,92 @@
+!SESSION 2020-04-13 17:39:08.922 -----------------------------------------------
+eclipse.buildId=4.13.0.I20190916-1045
+java.version=13.0.1
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.update.configurator 4 0 2020-04-13 17:39:11.524
+!MESSAGE Unable to find feature.xml in directory: C:\Progress\OpenEdge\oeide\eclipse\features\org.sonarlint.eclipse.feature.source_4.2.1203.jar
+
+!ENTRY org.eclipse.update.configurator 4 0 2020-04-13 17:39:11.525
+!MESSAGE Unable to find feature.xml in directory: C:\Progress\OpenEdge\oeide\eclipse\features\org.sonarlint.eclipse.feature_4.2.1203.jar
+
+!ENTRY com.openedge.pdt.server 4 0 2020-04-13 17:43:54.505
+!MESSAGE The runtime 12.2 for OpenEdge server oepas1 in nikolayvasi711d.oepas1 (Progress Application Server for OpenEdge 12.2) is not installed at C:\Progress\OpenEdge
+
+!ENTRY org.eclipse.core.jobs 2 2 2020-04-13 17:43:55.005
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.wst.server.core.internal.Server$StopJob
+!SESSION 2020-04-14 18:00:58.681 -----------------------------------------------
+eclipse.buildId=4.13.0.I20190916-1045
+java.version=13.0.1
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.ui 2 2 2020-04-14 18:03:46.509
+!MESSAGE com.openedge.pdt.text.views.ClassBrowserView: Deprecated relationship "fast" should be converted to "stack".
+!SESSION 2020-04-20 12:04:19.642 -----------------------------------------------
+eclipse.buildId=4.13.0.I20190916-1045
+java.version=13.0.1
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.openedge.pdt.design 4 20001 2020-04-20 12:05:08.469
+!MESSAGE An internal error occurred
+!STACK 0
+com.openedge.pdt.design.comm.ClientServiceException: Timed out waiting for the OpenEdge AVM to start the Visual Designer. .NET runtime for GUITest failed to start.
+	at com.openedge.pdt.design.project.AbstractClientService.internalStartService(AbstractClientService.java:426)
+	at com.openedge.pdt.design.project.AbstractClientService$StartServiceJob.run(AbstractClientService.java:728)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY com.progress.openedge.pdt.rest 4 0 2020-04-20 12:10:38.589
+!MESSAGE Problem in OpendEdge Explorer: Instance target directory already exists - C:\OpenEdge\WRK\oepas1\webapps/SportsData
+URL invoked: http://localhost:9090/oem/containers/nikolayvasi711d/pas/localhost:resource.openedge.pas.oepas1/webapps/SportsData?deploymentType=oeabl&loadContext=true
+
+!SESSION 2020-04-22 10:01:44.203 -----------------------------------------------
+eclipse.buildId=4.13.0.I20190916-1045
+java.version=13.0.1
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.help.base 2 0 2020-04-22 11:18:42.513
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.wst.webtools.doc.user_1.0.500.v201903222120 [454]'. The index should be rebuilt with Lucene 8.0.0
+
+!ENTRY org.eclipse.help.base 2 0 2020-04-22 11:18:42.518
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.wst.command.env.doc.user_1.5.400.v201903222115 [362]'. The index should be rebuilt with Lucene 8.0.0
+
+!ENTRY org.eclipse.help.base 2 0 2020-04-22 11:18:42.522
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.wst.server.ui.doc.user_1.1.600.v201901310132 [441]'. The index should be rebuilt with Lucene 8.0.0
+
+!ENTRY org.eclipse.help.base 2 0 2020-04-22 11:18:42.605
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.wst.dtdeditor.doc.user_1.1.0.v201903222120 [385]'. The index should be rebuilt with Lucene 8.0.0
+
+!ENTRY org.eclipse.help.base 2 0 2020-04-22 11:18:42.662
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.wst.xmleditor.doc.user_1.1.0.v201903222120 [478]'. The index should be rebuilt with Lucene 8.0.0
+
+!ENTRY org.eclipse.help.base 2 0 2020-04-22 11:18:42.666
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.wst.wsi.ui.doc.user_1.0.750.v201903222115 [468]'. The index should be rebuilt with Lucene 8.0.0
+
+!ENTRY org.eclipse.help.base 2 0 2020-04-22 11:18:42.668
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.wst.xsdeditor.doc.user_1.0.800.v201903222120 [481]'. The index should be rebuilt with Lucene 8.0.0
+
+!ENTRY org.eclipse.help.base 2 0 2020-04-22 11:18:42.671
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.wst.sse.doc.user_1.2.0.v201903222120 [444]'. The index should be rebuilt with Lucene 8.0.0
+
+!ENTRY org.eclipse.help.base 2 0 2020-04-22 11:18:42.684
+!MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.wst.wsdl.ui.doc.user_1.0.850.v201903222115 [464]'. The index should be rebuilt with Lucene 8.0.0
+
+!ENTRY org.eclipse.help.base 4 4 2020-04-22 11:19:04.874
+!MESSAGE Help documentation could not be indexed completely.
+!SUBENTRY 1 org.eclipse.help.base 4 4 2020-04-22 11:19:04.874
+!MESSAGE Help document /org.eclipse.wst.jsdt.doc/reference/extension-points/org_eclipse_wst_jsdt_core_codeFormatter.html cannot be opened.
+!SUBENTRY 1 org.eclipse.help.base 4 4 2020-04-22 11:19:04.874
+!MESSAGE Help document /com.openedge.pdt.getstart.help/rfi1358179693758.html cannot be opened.
+
+!ENTRY com.openedge.pdt.server 4 0 2020-04-22 19:27:49.994
+!MESSAGE The runtime 12.2 for OpenEdge server oepas1 in nikolayvasi711d.oepas1 (Progress Application Server for OpenEdge 12.2) is not installed at C:\Progress\OpenEdge
+
+!ENTRY org.eclipse.core.jobs 2 2 2020-04-22 19:27:50.284
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.wst.server.core.internal.Server$StopJob

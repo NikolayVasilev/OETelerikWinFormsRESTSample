@@ -1,0 +1,221 @@
+{"services": {"SportsDataService": {
+    "version": "1.0.0",
+    "operations": {
+        "\/": {"GET": {
+            "contentType": "application\/json",
+            "statusCode": 200,
+            "file": "$CATALINA_BASE\/webapps\/$oepas-webapp\/static\/SportsDataService.json"
+        }},
+        "\/Customer": {
+            "PUT": {
+                "contentType": "application\/json",
+                "options": {"writeBI": true},
+                "entity": {
+                    "name": "Customer",
+                    "function": "UpdateCustomer",
+                    "arg": [{
+                        "ablName": "dsCustomer",
+                        "ablType": "DATASET",
+                        "ioMode": "INPUT-OUTPUT",
+                        "msgElem": {
+                            "type": "BODY",
+                            "name": null
+                        }
+                    }]
+                }
+            },
+            "DELETE": {
+                "contentType": "application\/json",
+                "options": {"writeBI": true},
+                "entity": {
+                    "name": "Customer",
+                    "function": "DeleteCustomer",
+                    "arg": [{
+                        "ablName": "dsCustomer",
+                        "ablType": "DATASET",
+                        "ioMode": "INPUT-OUTPUT",
+                        "msgElem": {
+                            "type": "BODY",
+                            "name": null
+                        }
+                    }]
+                }
+            },
+            "GET": {
+                "contentType": "application\/json",
+                "options": {"writeBI": true},
+                "entity": {
+                    "name": "Customer",
+                    "function": "ReadCustomer",
+                    "arg": [
+                        {
+                            "ablName": "filter",
+                            "ablType": "CHARACTER",
+                            "ioMode": "INPUT",
+                            "msgElem": {
+                                "type": "QUERY",
+                                "name": "filter"
+                            }
+                        },
+                        {
+                            "ablName": "dsCustomer",
+                            "ablType": "DATASET",
+                            "ioMode": "OUTPUT",
+                            "msgElem": {
+                                "type": "BODY",
+                                "name": null
+                            }
+                        }
+                    ]
+                }
+            },
+            "POST": {
+                "contentType": "application\/json",
+                "options": {"writeBI": true},
+                "entity": {
+                    "name": "Customer",
+                    "function": "CreateCustomer",
+                    "arg": [{
+                        "ablName": "dsCustomer",
+                        "ablType": "DATASET",
+                        "ioMode": "INPUT-OUTPUT",
+                        "msgElem": {
+                            "type": "BODY",
+                            "name": null
+                        }
+                    }]
+                }
+            }
+        }
+    },
+    "schemas": {"dsCustomer": {"ttCustomer": {
+        "trackChanges": true,
+        "indexes": {
+            "Comments": {
+                "primary": false,
+                "unique": false,
+                "word": false,
+                "fields": ["Comments:asc"]
+            },
+            "CountryPost": {
+                "primary": false,
+                "unique": false,
+                "word": false,
+                "fields": [
+                    "Country:asc",
+                    "PostalCode:asc"
+                ]
+            },
+            "CustNum": {
+                "primary": true,
+                "unique": true,
+                "word": false,
+                "fields": ["CustNum:asc"]
+            },
+            "Name": {
+                "primary": false,
+                "unique": false,
+                "word": false,
+                "fields": ["Name:asc"]
+            },
+            "SalesRep": {
+                "primary": false,
+                "unique": false,
+                "word": false,
+                "fields": ["SalesRep:asc"]
+            }
+        },
+        "fields": [
+            {
+                "name": "CustNum",
+                "ablType": "INTEGER",
+                "extent": null
+            },
+            {
+                "name": "Country",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "Name",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "Address",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "Address2",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "City",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "State",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "PostalCode",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "Contact",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "Phone",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "SalesRep",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "CreditLimit",
+                "ablType": "DECIMAL",
+                "extent": null
+            },
+            {
+                "name": "Balance",
+                "ablType": "DECIMAL",
+                "extent": null
+            },
+            {
+                "name": "Terms",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "Discount",
+                "ablType": "INTEGER",
+                "extent": null
+            },
+            {
+                "name": "Comments",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "Fax",
+                "ablType": "CHARACTER",
+                "extent": null
+            },
+            {
+                "name": "EmailAddress",
+                "ablType": "CHARACTER",
+                "extent": null
+            }
+        ]
+    }}}
+}}}

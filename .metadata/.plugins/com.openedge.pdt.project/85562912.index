@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<libraryinfo path="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest" type="PathEntry" ModificationStamp="1587572940547" FullName="GUITest" lib_header_magic_number="2384638594569" lib_header_version="15">
+	<procedures>
+		<relative path="">
+			<procedure name="RunForm1" SourceFilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/RunForm1.p" RfilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/RunForm1.r"></procedure>
+		</relative>
+		<relative path="Utils">
+			<procedure name="TempTableToDataTable" SourceFilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Utils/TempTableToDataTable.p" RfilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Utils/TempTableToDataTable.r"></procedure>
+		</relative>
+		<relative path="Service">
+			<procedure name="ConsumeREST" SourceFilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Service/ConsumeREST.p" RfilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Service/ConsumeREST.r"></procedure>
+		</relative>
+	</procedures>
+	<classes>
+		<pacakage name="">
+			<class name="Form1" SourceFilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Form1.cls" RfilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Form1.r" Abstract="false" Final="false" isInterface="false" isSerializable="false" SuperClassName="Progress.Windows.Form" InterfaceNames="" ImportedPackages=""></class>
+		</pacakage>
+		<pacakage name="Utils">
+			<class name="Utils.TempTableToDataTableConverter" SourceFilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Utils/TempTableToDataTableConverter.cls" RfilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Utils/TempTableToDataTableConverter.r" Abstract="false" Final="false" isInterface="false" isSerializable="false" SuperClassName="Progress.Lang.Object" InterfaceNames="" ImportedPackages=""></class>
+		</pacakage>
+		<pacakage name="Service">
+			<class name="Service.ServiceClient" SourceFilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Service/ServiceClient.cls" RfilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Service/ServiceClient.r" Abstract="false" Final="false" isInterface="false" isSerializable="false" SuperClassName="Progress.Lang.Object" InterfaceNames="" ImportedPackages=""></class>
+		</pacakage>
+		<pacakage name="Entities">
+			<class name="Entities.Customer" SourceFilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Entities/Customer.cls" RfilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/Entities/Customer.r" Abstract="false" Final="false" isInterface="false" isSerializable="false" SuperClassName="Progress.Lang.Object" InterfaceNames="" ImportedPackages=""></class>
+		</pacakage>
+	</classes>
+</libraryinfo>

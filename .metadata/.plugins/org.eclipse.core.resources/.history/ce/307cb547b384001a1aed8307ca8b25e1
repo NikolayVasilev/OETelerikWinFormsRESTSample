@@ -1,0 +1,23 @@
+ 
+ /*------------------------------------------------------------------------
+    File        : TempTableToDataTableConverter
+    Purpose     : 
+    Syntax      : 
+    Description : 
+    Author(s)   : nvasilev
+    Created     : Wed Apr 22 19:05:03 EEST 2020
+    Notes       : 
+  ----------------------------------------------------------------------*/
+
+USING Progress.Lang.*.
+USING System.Data.DataTable FROM ASSEMBLY.
+
+BLOCK-LEVEL ON ERROR UNDO, THROW.
+
+CLASS Utils.TempTableToDataTableConverter: 
+
+    METHOD PUBLIC STATIC DataTable GetDataTable():
+        
+    END.
+
+END CLASS.

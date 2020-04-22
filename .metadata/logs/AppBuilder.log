@@ -1,0 +1,5 @@
+2020-04-20 12:05:08,478 [ERROR]  - An internal error occurred
+com.openedge.pdt.design.comm.ClientServiceException: Timed out waiting for the OpenEdge AVM to start the Visual Designer. .NET runtime for GUITest failed to start.
+	at com.openedge.pdt.design.project.AbstractClientService.internalStartService(AbstractClientService.java:426)
+	at com.openedge.pdt.design.project.AbstractClientService$StartServiceJob.run(AbstractClientService.java:728)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)

@@ -1,0 +1,96 @@
+/*------------------------------------------------------------------------
+  File        : ConsumeREST.p
+  Purpose     : Example of using the OE HTTP client to consume a REST
+                service. Expects the response to be JSON or XML.
+
+                Shows setting username/password for basic authentication.
+
+  Syntax      :
+
+  Description :
+
+  Author(s)   :
+  Created     :
+  Notes       :
+  ----------------------------------------------------------------------*/
+
+BLOCK-LEVEL ON ERROR UNDO, THROW.
+
+USING OpenEdge.Core.WidgetHandle FROM PROPATH.
+USING OpenEdge.Net.HTTP.ClientBuilder FROM PROPATH.
+USING OpenEdge.Net.HTTP.Credentials FROM PROPATH.
+USING OpenEdge.Net.HTTP.IHttpClient FROM PROPATH.
+USING OpenEdge.Net.HTTP.IHttpRequest FROM PROPATH.
+USING OpenEdge.Net.HTTP.IHttpResponse FROM PROPATH.
+USING OpenEdge.Net.HTTP.RequestBuilder FROM PROPATH.
+USING OpenEdge.Net.URI FROM PROPATH.
+USING Progress.Json.ObjectModel.JsonObject FROM PROPATH.
+USING Progress.Lang.AppError FROM PROPATH.
+
+
+{Entities/customer.i}
+DEFINE VARIABLE hXDoc        AS HANDLE        NO-UNDO.
+DEFINE VARIABLE oClient      AS IHttpClient   NO-UNDO.
+DEFINE VARIABLE oCredentials AS Credentials   NO-UNDO.
+DEFINE VARIABLE oJson        AS JsonObject    NO-UNDO.
+DEFINE VARIABLE oRequest     AS IHttpRequest  NO-UNDO.
+DEFINE VARIABLE oResponse    AS IHttpResponse NO-UNDO.
+DEFINE VARIABLE oURI         AS URI           NO-UNDO.
+
+
+ASSIGN oClient = ClientBuilder:Build():Client
+       oUri = NEW URI("http", "localhost", 8810)
+       oUri:Path = "/SportsData/web/pdo/SportsDataService/Customer"
+       //oCredentials = NEW Credentials()
+       //oCredentials:UserName = "chris"  // or qualified, e.g. chris@uk
+       //oCredentials:Password = "chris".
+
+oRequest = RequestBuilder:Get(oUri)
+           :UsingBasicAuthentication(oCredentials)
+           :Request.
+
+oResponse = oClient:Execute(oRequest).
+
+IF oResponse:StatusCode = 200 THEN // Request succeeded.
+DO:
+  IF TYPE-OF(oResponse:Entity, JsonObject) THEN
+  DO:
+    oJson = CAST(oResponse:Entity, JsonObject). // use this with dataset
+    
+    
+    DATASET dsCustomer:READ-JSON("JSONObject", oJson, "REPLACE").
+    oJson:WriteFile("xxx.json").
+
+  END. ELSE IF TYPE-OF(oResponse:Entity, WidgetHandle) THEN
+  DO:
+    hXDoc = CAST(oResponse:Entity, WidgetHandle):Value.
+
+    hXDoc:SAVE("FILE", "xxx.xml").
+  END.
+  ELSE
+  DO:
+    UNDO, THROW NEW AppError(SUBSTITUTE("Unknown response type. Content-Type: &1 Entity Class: &2",
+                             oResponse:ContentType,
+                             oResponse:Entity:GetClass():TypeName), 1).
+  END.
+END. ELSE // Got an error status code
+DO:
+  UNDO, THROW NEW AppError(SUBSTITUTE("Request failed. StatusCode: &1 StatusReason: &2",
+                                      oResponse:StatusCode,
+                                      oResponse:StatusReason), 2).
+END.
+
+MESSAGE "Done"
+  VIEW-AS ALERT-BOX INFORMATION.
+
+
+CATCH e AS Progress.Lang.Error :
+  MESSAGE e:GetMessage(1) e:CallStack
+    VIEW-AS ALERT-BOX ERROR TITLE "HTTP Request Error".
+END CATCH.
+
+FINALLY:
+  DELETE OBJECT oClient   NO-ERROR.
+  DELETE OBJECT oRequest  NO-ERROR.
+  DELETE OBJECT oResponse NO-ERROR.
+END FINALLY.
