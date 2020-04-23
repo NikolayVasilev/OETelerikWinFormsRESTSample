@@ -101,18 +101,18 @@ CLASS Form1 INHERITS Form:
         /*  */
         THIS-OBJECT:CustomersGridView:MasterTemplate:ViewDefinition = tableViewDefinition1.
         THIS-OBJECT:CustomersGridView:Name = "CustomersGridView".
-        THIS-OBJECT:CustomersGridView:Size = NEW System.Drawing.Size(834, 573).
+        THIS-OBJECT:CustomersGridView:Size = NEW System.Drawing.Size(747, 562).
         THIS-OBJECT:CustomersGridView:TabIndex = 2.
         THIS-OBJECT:CustomersGridView:ThemeName = "FluentDark".
         /*  */
         /* Form1 */
         /*  */
-        THIS-OBJECT:ClientSize = NEW System.Drawing.Size(1097, 597).
+        THIS-OBJECT:ClientSize = NEW System.Drawing.Size(877, 586).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomersGridView).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:textBox1).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:telerikButton1).
         THIS-OBJECT:Name = "Form1".
-        THIS-OBJECT:Text = "TestForm".
+        THIS-OBJECT:Text = "CustomerLocator".
         THIS-OBJECT:Load:Subscribe(THIS-OBJECT:Form1_Load).
         CAST(THIS-OBJECT:telerikButton1, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomersGridView:MasterTemplate, System.ComponentModel.ISupportInitialize):EndInit().
