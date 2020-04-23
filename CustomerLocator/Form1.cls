@@ -21,16 +21,20 @@ USING ViewModels.CustomerWindowViewModel FROM PROPATH.
 USING System.Data.DataRow FROM ASSEMBLY.
 USING StringGenerator.SampleStringGenerator FROM ASSEMBLY.
 USING System.Drawing.ContentAlignment FROM ASSEMBLY.
+USING System.Drawing.Color FROM ASSEMBLY.
+USING System.Math FROM ASSEMBLY.
+USING System.Double FROM ASSEMBLY.
 
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 
 CLASS Form1 INHERITS Form: 
 	
     DEFINE PRIVATE VARIABLE components AS System.ComponentModel.IContainer NO-UNDO.
+    DEFINE PRIVATE VARIABLE CustomerPropertyGrid AS Telerik.WinControls.UI.RadPropertyGrid NO-UNDO.
+    DEFINE PRIVATE VARIABLE CustomerAddressMap AS Telerik.WinControls.UI.RadMap NO-UNDO.
     DEFINE PRIVATE VARIABLE CustomersGridView AS Telerik.WinControls.UI.RadGridView NO-UNDO.
     DEFINE PRIVATE VARIABLE fluentDarkTheme1 AS Telerik.WinControls.Themes.FluentDarkTheme NO-UNDO.
     DEFINE PRIVATE VARIABLE office2013DarkTheme1 AS Telerik.WinControls.Themes.Office2013DarkTheme NO-UNDO.
-    DEFINE PRIVATE VARIABLE radPropertyGrid1 AS Telerik.WinControls.UI.RadPropertyGrid NO-UNDO.
     DEFINE PRIVATE VARIABLE textBox1 AS System.Windows.Forms.TextBox NO-UNDO.
     DEFINE PRIVATE VARIABLE telerikButton1 AS RadButton NO-UNDO.
     DEFINE VARIABLE oViewModel AS CustomerWindowViewModel NO-UNDO.
@@ -59,7 +63,7 @@ CLASS Form1 INHERITS Form:
             THIS-OBJECT:oViewModel:SelectedDataRow = DYNAMIC-CAST (THIS-OBJECT:CustomersGridView:CurrentRow:DataBoundItem, "System.Data.DataRowView").
         END.
         
-        THIS-OBJECT:radPropertyGrid1:SelectedObject = THIS-OBJECT:oViewModel:SelectedDataRow.
+        THIS-OBJECT:CustomerPropertyGrid:SelectedObject = THIS-OBJECT:oViewModel:SelectedDataRow.
 		
         RETURN.
 
@@ -72,6 +76,7 @@ CLASS Form1 INHERITS Form:
     @VisualDesigner.
     METHOD PRIVATE VOID Form1_Load( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
         THIS-OBJECT:PrepareGridView().
+        THIS-OBJECT:PrepareMap().
         RETURN.
 
     END METHOD.
@@ -92,11 +97,13 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:office2013DarkTheme1 = NEW Telerik.WinControls.Themes.Office2013DarkTheme().
         THIS-OBJECT:CustomersGridView = NEW Telerik.WinControls.UI.RadGridView().
         THIS-OBJECT:fluentDarkTheme1 = NEW Telerik.WinControls.Themes.FluentDarkTheme().
-        THIS-OBJECT:radPropertyGrid1 = NEW Telerik.WinControls.UI.RadPropertyGrid().
+        THIS-OBJECT:CustomerPropertyGrid = NEW Telerik.WinControls.UI.RadPropertyGrid().
+        THIS-OBJECT:CustomerAddressMap = NEW Telerik.WinControls.UI.RadMap().
         CAST(THIS-OBJECT:telerikButton1, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomersGridView, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomersGridView:MasterTemplate, System.ComponentModel.ISupportInitialize):BeginInit().
-        CAST(THIS-OBJECT:radPropertyGrid1, System.ComponentModel.ISupportInitialize):BeginInit().
+        CAST(THIS-OBJECT:CustomerPropertyGrid, System.ComponentModel.ISupportInitialize):BeginInit().
+        CAST(THIS-OBJECT:CustomerAddressMap, System.ComponentModel.ISupportInitialize):BeginInit().
         THIS-OBJECT:SuspendLayout().
         /*  */
         /* textBox1 */
@@ -132,24 +139,34 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:CustomersGridView:ThemeName = "FluentDark".
         THIS-OBJECT:CustomersGridView:SelectionChanged:Subscribe(THIS-OBJECT:CustomersGridView_SelectionChanged).
         /*  */
-        /* radPropertyGrid1 */
+        /* CustomerPropertyGrid */
         /*  */
-        THIS-OBJECT:radPropertyGrid1:EnableCustomGrouping = TRUE.
-        THIS-OBJECT:radPropertyGrid1:HelpVisible = FALSE.
-        THIS-OBJECT:radPropertyGrid1:ItemHeight = 28.
-        THIS-OBJECT:radPropertyGrid1:ItemIndent = 28.
-        THIS-OBJECT:radPropertyGrid1:Location = NEW System.Drawing.Point(118, 343).
-        THIS-OBJECT:radPropertyGrid1:Name = "radPropertyGrid1".
-        THIS-OBJECT:radPropertyGrid1:ReadOnly = TRUE.
-        THIS-OBJECT:radPropertyGrid1:Size = NEW System.Drawing.Size(361, 231).
-        THIS-OBJECT:radPropertyGrid1:TabIndex = 3.
-        THIS-OBJECT:radPropertyGrid1:ThemeName = "FluentDark".
+        THIS-OBJECT:CustomerPropertyGrid:EnableCustomGrouping = TRUE.
+        THIS-OBJECT:CustomerPropertyGrid:HelpVisible = FALSE.
+        THIS-OBJECT:CustomerPropertyGrid:ItemHeight = 28.
+        THIS-OBJECT:CustomerPropertyGrid:ItemIndent = 28.
+        THIS-OBJECT:CustomerPropertyGrid:Location = NEW System.Drawing.Point(118, 343).
+        THIS-OBJECT:CustomerPropertyGrid:Name = "CustomerPropertyGrid".
+        THIS-OBJECT:CustomerPropertyGrid:ReadOnly = TRUE.
+        THIS-OBJECT:CustomerPropertyGrid:Size = NEW System.Drawing.Size(361, 231).
+        THIS-OBJECT:CustomerPropertyGrid:TabIndex = 3.
+        THIS-OBJECT:CustomerPropertyGrid:ThemeName = "FluentDark".
+        /*  */
+        /* CustomerAddressMap */
+        /*  */
+        THIS-OBJECT:CustomerAddressMap:EnableTheming = FALSE.
+        THIS-OBJECT:CustomerAddressMap:Location = NEW System.Drawing.Point(485, 343).
+        THIS-OBJECT:CustomerAddressMap:Name = "CustomerAddressMap".
+        THIS-OBJECT:CustomerAddressMap:Size = NEW System.Drawing.Size(380, 231).
+        THIS-OBJECT:CustomerAddressMap:TabIndex = 4.
+        THIS-OBJECT:CustomerAddressMap:ThemeName = "FluentDark".
         /*  */
         /* Form1 */
         /*  */
         THIS-OBJECT:BackColor = System.Drawing.Color:DimGray.
         THIS-OBJECT:ClientSize = NEW System.Drawing.Size(877, 586).
-        THIS-OBJECT:Controls:Add(THIS-OBJECT:radPropertyGrid1).
+        THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomerAddressMap).
+        THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomerPropertyGrid).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomersGridView).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:textBox1).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:telerikButton1).
@@ -159,7 +176,8 @@ CLASS Form1 INHERITS Form:
         CAST(THIS-OBJECT:telerikButton1, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomersGridView:MasterTemplate, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomersGridView, System.ComponentModel.ISupportInitialize):EndInit().
-        CAST(THIS-OBJECT:radPropertyGrid1, System.ComponentModel.ISupportInitialize):EndInit().
+        CAST(THIS-OBJECT:CustomerPropertyGrid, System.ComponentModel.ISupportInitialize):EndInit().
+        CAST(THIS-OBJECT:CustomerAddressMap, System.ComponentModel.ISupportInitialize):EndInit().
         THIS-OBJECT:ResumeLayout(FALSE).
         THIS-OBJECT:PerformLayout().
         CATCH e AS Progress.Lang.Error:
@@ -215,6 +233,101 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:CustomersGridView:MasterTemplate:Columns:Add(textBoxColumn).
     END.
     
+    METHOD PRIVATE VOID PrepareMap():
+        DEFINE VARIABLE pinsLayer AS Telerik.WinControls.UI.MapLayer NO-UNDO.
+        DEFINE VARIABLE bingProvider AS BingRestMapProvider NO-UNDO.
+        DEFINE VARIABLE cacheFolder AS CHARACTER NO-UNDO.
+        DEFINE VARIABLE cache AS LocalFileCacheProvider NO-UNDO.
+        
+        cacheFolder = "cache".
+        bingProvider = NEW Telerik.WinControls.UI.BingRestMapProvider().
+        bingProvider:UseSession = TRUE.
+        bingProvider:BingKey = "Audxd9rehcmI76cwkNYHhCNgkbQxsCmccC0-M4f6oc66VQOxMLhZluCSwi10PSp_".
+        cache = NEW LocalFileCacheProvider(cacheFolder).
+        bingProvider:CacheProvider = cache.
+        THIS-OBJECT:CustomerAddressMap:Providers:Add(bingProvider).
+        
+        THIS-OBJECT:CustomerAddressMap:ShowSearchBar = TRUE.
+        pinsLayer = NEW MapLayer("Pins").
+        THIS-OBJECT:CustomerAddressMap:Layers:Add(pinsLayer).
+        THIS-OBJECT:CustomerAddressMap:MapElement:SearchBarElement:SearchProvider = bingProvider.
+    
+        THIS-OBJECT:CustomerAddressMap:MapElement:SearchBarElement:SearchProvider:SearchCompleted:Subscribe(THIS-OBJECT:BingProviderSearchCompleted).
+        THIS-OBJECT:CustomerAddressMap:MapElement:SearchBarElement:SearchProvider:SearchError:Subscribe(BingProviderSearchError).        
+    END.
+    
+    METHOD PRIVATE VOID BingProviderSearchError( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
+        
+        DEFINE VARIABLE eventArgs AS SearchErrorEventArgs NO-UNDO.
+        
+        eventArgs = DYNAMIC-CAST (e, "Telerik.WinControls.UI.SearchErrorEventArgs").
+        
+        MESSAGE eventArgs:Error:Message
+            VIEW-AS ALERT-BOX.
+        RETURN.
+
+    END METHOD.
+    
+    
+    METHOD PRIVATE VOID BingProviderSearchCompleted( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
+        
+        DEFINE VARIABLE eventArgs AS SearchCompletedEventArgs NO-UNDO.
+        DEFINE VARIABLE allPoints AS Telerik.WinControls.UI.Map.RectangleG NO-UNDO.        
+        DEFINE VARIABLE locationIndex AS INTEGER NO-UNDO.
+        DEFINE VARIABLE location AS Telerik.WinControls.UI.Map.Bing.Location NO-UNDO.  
+        DEFINE VARIABLE point AS Telerik.WinControls.UI.Map.PointG NO-UNDO. 
+        DEFINE VARIABLE pin AS MapPin NO-UNDO.
+        
+        
+        eventArgs = DYNAMIC-CAST (e, "Telerik.WinControls.UI.SearchCompletedEventArgs").
+        
+
+        allPoints = NEW Telerik.WinControls.UI.Map.RectangleG(Double:MinValue, Double:MaxValue, Double:MaxValue, Double:MinValue).
+        THIS-OBJECT:CustomerAddressMap:Layers["Pins"]:Clear().
+        
+        locationIndex = 0.
+        
+        DO locationIndex = 0 TO eventArgs:Locations:Length - 1:
+            location = DYNAMIC-CAST(eventArgs:Locations:GetValue(locationIndex), "Telerik.WinControls.UI.Map.Bing.Location").
+            
+            location:Point:Coordinates.
+/*            point = NEW Telerik.WinControls.UI.Map.PointG(location:Point:Coordinates[0], location:Point:Coordinates[1]).*/
+            
+            point = NEW Telerik.WinControls.UI.Map.PointG(0,0).
+            pin = NEW MapPin(point).
+            pin:Size = NEW System.Drawing.Size(20, 40).
+            pin:BackColor = Color:Red.
+            pin:ToolTipText = location:Address:FormattedAddress.
+            THIS-OBJECT:CustomerAddressMap:MapElement:Layers["Pins"]:Add(pin).
+            allPoints:North = Math:Max(allPoints:North, point:Latitude).
+            allPoints:South = Math:Min(allPoints:South, point:Latitude).
+            allPoints:West = Math:Min(allPoints:West, point:Longitude).
+            allPoints:East = Math:Max(allPoints:East, point:Longitude).
+        END.
+        
+        
+        IF (eventArgs:Locations:Length > 0) THEN DO:
+        
+            if (eventArgs:Locations:Length = 1) THEN DO:
+            
+                //THIS-OBJECT:CustomerAddressMap:BringIntoView(new Telerik.WinControls.UI.Map.PointG(eventArgs:Locations[0]:Point:Coordinates[0], eventArgs:Locations[0]:Point:Coordinates[1])).
+            END.
+            else do:           
+                THIS-OBJECT:CustomerAddressMap:MapElement:BringIntoView(allPoints).
+                THIS-OBJECT:CustomerAddressMap:Zoom(THIS-OBJECT:CustomerAddressMap:MapElement:ZoomLevel - 1).
+            end.
+        END.
+        else do:
+        
+            MESSAGE "No result found for the provided search query!"
+            VIEW-AS ALERT-BOX.
+        end.
+
+
+
+        RETURN.
+
+    END METHOD.
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:
