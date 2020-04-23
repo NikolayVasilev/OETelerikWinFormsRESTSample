@@ -19,6 +19,7 @@ USING Utils.TempTableToDataTableConverter FROM PROPATH.
 USING System.Data.DataTable FROM ASSEMBLY.
 USING ViewModels.CustomerWindowViewModel FROM PROPATH.
 USING System.Data.DataRow FROM ASSEMBLY.
+USING StringGenerator.SampleStringGenerator FROM ASSEMBLY.
 
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 
@@ -28,6 +29,7 @@ CLASS Form1 INHERITS Form:
     DEFINE PRIVATE VARIABLE CustomersGridView AS Telerik.WinControls.UI.RadGridView NO-UNDO.
     DEFINE PRIVATE VARIABLE fluentDarkTheme1 AS Telerik.WinControls.Themes.FluentDarkTheme NO-UNDO.
     DEFINE PRIVATE VARIABLE office2013DarkTheme1 AS Telerik.WinControls.Themes.Office2013DarkTheme NO-UNDO.
+    DEFINE PRIVATE VARIABLE radPropertyGrid1 AS Telerik.WinControls.UI.RadPropertyGrid NO-UNDO.
     DEFINE PRIVATE VARIABLE textBox1 AS System.Windows.Forms.TextBox NO-UNDO.
     DEFINE PRIVATE VARIABLE telerikButton1 AS RadButton NO-UNDO.
     DEFINE VARIABLE oViewModel AS CustomerWindowViewModel NO-UNDO.
@@ -55,6 +57,8 @@ CLASS Form1 INHERITS Form:
         IF THIS-OBJECT:CustomersGridView:SelectedRows:Count > 0 THEN DO:
             THIS-OBJECT:oViewModel:SelectedDataRow = DYNAMIC-CAST (THIS-OBJECT:CustomersGridView:CurrentRow:DataBoundItem, "System.Data.DataRowView").
         END.
+        
+        THIS-OBJECT:radPropertyGrid1:SelectedObject = THIS-OBJECT:oViewModel:SelectedDataRow.
 		
         RETURN.
 
@@ -87,9 +91,11 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:office2013DarkTheme1 = NEW Telerik.WinControls.Themes.Office2013DarkTheme().
         THIS-OBJECT:CustomersGridView = NEW Telerik.WinControls.UI.RadGridView().
         THIS-OBJECT:fluentDarkTheme1 = NEW Telerik.WinControls.Themes.FluentDarkTheme().
+        THIS-OBJECT:radPropertyGrid1 = NEW Telerik.WinControls.UI.RadPropertyGrid().
         CAST(THIS-OBJECT:telerikButton1, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomersGridView, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomersGridView:MasterTemplate, System.ComponentModel.ISupportInitialize):BeginInit().
+        CAST(THIS-OBJECT:radPropertyGrid1, System.ComponentModel.ISupportInitialize):BeginInit().
         THIS-OBJECT:SuspendLayout().
         /*  */
         /* textBox1 */
@@ -118,15 +124,30 @@ CLASS Form1 INHERITS Form:
         /*  */
         THIS-OBJECT:CustomersGridView:MasterTemplate:ViewDefinition = tableViewDefinition1.
         THIS-OBJECT:CustomersGridView:Name = "CustomersGridView".
+        THIS-OBJECT:CustomersGridView:ReadOnly = TRUE.
         THIS-OBJECT:CustomersGridView:Size = NEW System.Drawing.Size(747, 325).
         THIS-OBJECT:CustomersGridView:TabIndex = 2.
         THIS-OBJECT:CustomersGridView:ThemeName = "FluentDark".
         THIS-OBJECT:CustomersGridView:SelectionChanged:Subscribe(THIS-OBJECT:CustomersGridView_SelectionChanged).
         /*  */
+        /* radPropertyGrid1 */
+        /*  */
+        THIS-OBJECT:radPropertyGrid1:EnableCustomGrouping = TRUE.
+        THIS-OBJECT:radPropertyGrid1:HelpVisible = FALSE.
+        THIS-OBJECT:radPropertyGrid1:ItemHeight = 28.
+        THIS-OBJECT:radPropertyGrid1:ItemIndent = 28.
+        THIS-OBJECT:radPropertyGrid1:Location = NEW System.Drawing.Point(118, 343).
+        THIS-OBJECT:radPropertyGrid1:Name = "radPropertyGrid1".
+        THIS-OBJECT:radPropertyGrid1:ReadOnly = TRUE.
+        THIS-OBJECT:radPropertyGrid1:Size = NEW System.Drawing.Size(361, 231).
+        THIS-OBJECT:radPropertyGrid1:TabIndex = 3.
+        THIS-OBJECT:radPropertyGrid1:ThemeName = "FluentDark".
+        /*  */
         /* Form1 */
         /*  */
         THIS-OBJECT:BackColor = System.Drawing.Color:DimGray.
         THIS-OBJECT:ClientSize = NEW System.Drawing.Size(877, 586).
+        THIS-OBJECT:Controls:Add(THIS-OBJECT:radPropertyGrid1).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomersGridView).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:textBox1).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:telerikButton1).
@@ -136,6 +157,7 @@ CLASS Form1 INHERITS Form:
         CAST(THIS-OBJECT:telerikButton1, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomersGridView:MasterTemplate, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomersGridView, System.ComponentModel.ISupportInitialize):EndInit().
+        CAST(THIS-OBJECT:radPropertyGrid1, System.ComponentModel.ISupportInitialize):EndInit().
         THIS-OBJECT:ResumeLayout(FALSE).
         THIS-OBJECT:PerformLayout().
         CATCH e AS Progress.Lang.Error:
@@ -163,10 +185,9 @@ CLASS Form1 INHERITS Form:
 
     METHOD PRIVATE VOID telerikButton1_Clicked( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):        
         
+
         
-        
-        MESSAGE "Clicked"
-            VIEW-AS ALERT-BOX.
+
         /*        MESSAGE "Number of row in the data table:" oCustomersDataTable:Rows:Count*/
         /*            VIEW-AS ALERT-BOX INFORMATION.                                       */
         
