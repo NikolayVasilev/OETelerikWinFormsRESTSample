@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<libraryinfo path="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest" type="PathEntry" ModificationStamp="1587572940547" FullName="GUITest" lib_header_magic_number="2384638594569" lib_header_version="15">
+<libraryinfo path="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest" type="PathEntry" ModificationStamp="1587626441786" FullName="GUITest" lib_header_magic_number="2384638594569" lib_header_version="15">
 	<procedures>
 		<relative path="">
 			<procedure name="RunForm1" SourceFilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/RunForm1.p" RfilePath="C:/oeworkspace/OETelerikWinFormsRESTSample/GUITest/RunForm1.r"></procedure>

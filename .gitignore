@@ -360,3 +360,4 @@ tmp/
 # Additions for metafiles
 ._README.md
 .metadata/*
+.sharedavm/*
