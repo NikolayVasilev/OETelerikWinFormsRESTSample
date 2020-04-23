@@ -33,8 +33,8 @@ CLASS Utils.TempTableToDataTableConverter:
         customersTable = NEW DataTable("ttCustomerRow").
 
         customersTable:Columns:Add(NEW DataColumn("CustNum", System.Type:GetType("System.Int32"))).
-        customersTable:Columns:Add(NEW DataColumn("Country", System.Type:GetType("System.String"))).
         customersTable:Columns:Add(NEW DataColumn("Name", System.Type:GetType("System.String"))).
+        customersTable:Columns:Add(NEW DataColumn("Country", System.Type:GetType("System.String"))).
         customersTable:Columns:Add(NEW DataColumn("Address", System.Type:GetType("System.String"))).
         customersTable:Columns:Add(NEW DataColumn("Address2", System.Type:GetType("System.String"))).
         customersTable:Columns:Add(NEW DataColumn("City", System.Type:GetType("System.String"))).      

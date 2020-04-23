@@ -20,6 +20,7 @@ USING System.Data.DataTable FROM ASSEMBLY.
 USING ViewModels.CustomerWindowViewModel FROM PROPATH.
 USING System.Data.DataRow FROM ASSEMBLY.
 USING StringGenerator.SampleStringGenerator FROM ASSEMBLY.
+USING System.Drawing.ContentAlignment FROM ASSEMBLY.
 
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 
@@ -122,6 +123,7 @@ CLASS Form1 INHERITS Form:
         /*  */
         /*  */
         /*  */
+        THIS-OBJECT:CustomersGridView:MasterTemplate:AutoGenerateColumns = FALSE.
         THIS-OBJECT:CustomersGridView:MasterTemplate:ViewDefinition = tableViewDefinition1.
         THIS-OBJECT:CustomersGridView:Name = "CustomersGridView".
         THIS-OBJECT:CustomersGridView:ReadOnly = TRUE.
@@ -167,11 +169,52 @@ CLASS Form1 INHERITS Form:
     
     METHOD PRIVATE VOID PrepareGridView():
         THIS-OBJECT:oViewModel:RefreshCustomers().
+        THIS-OBJECT:CreateColumns().
         
         THIS-OBJECT:CustomersGridView:DataSource = THIS-OBJECT:oViewModel:CustomersDataTable.
         THIS-OBJECT:CustomersGridView:AutoSizeColumnsMode = GridViewAutoSizeColumnsMode:Fill.
     END.
 
+    METHOD PRIVATE VOID CreateColumns():
+        DEFINE VARIABLE textBoxColumn AS GridViewTextBoxColumn NO-UNDO.
+        
+        ASSIGN
+            textBoxColumn = NEW GridViewTextBoxColumn()
+            textBoxColumn:Name = "CustNumColumn"
+            textBoxColumn:HeaderText = "CustNum"
+            textBoxColumn:FieldName = "CustNum"
+            textBoxColumn:MaxLength = 50
+            textBoxColumn:Width = 50.
+        THIS-OBJECT:CustomersGridView:MasterTemplate:Columns:Add(textBoxColumn).
+        
+        ASSIGN
+            textBoxColumn = NEW GridViewTextBoxColumn()
+            textBoxColumn:Name = "NameColumn"
+            textBoxColumn:HeaderText = "Name"
+            textBoxColumn:FieldName = "Name"
+            textBoxColumn:MaxLength = 50
+            textBoxColumn:Width = 150.
+        THIS-OBJECT:CustomersGridView:MasterTemplate:Columns:Add(textBoxColumn).
+        
+        ASSIGN
+            textBoxColumn = NEW GridViewTextBoxColumn()
+            textBoxColumn:Name = "CountryColumn"
+            textBoxColumn:HeaderText = "Country"
+            textBoxColumn:FieldName = "Country"
+            textBoxColumn:MaxLength = 50
+            textBoxColumn:Width = 150.
+        THIS-OBJECT:CustomersGridView:MasterTemplate:Columns:Add(textBoxColumn).
+        
+        ASSIGN
+            textBoxColumn = NEW GridViewTextBoxColumn()
+            textBoxColumn:Name = "CityColumn"
+            textBoxColumn:HeaderText = "City"
+            textBoxColumn:FieldName = "City"
+            textBoxColumn:MaxLength = 50
+            textBoxColumn:Width = 150.
+        THIS-OBJECT:CustomersGridView:MasterTemplate:Columns:Add(textBoxColumn).
+    END.
+    
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:
