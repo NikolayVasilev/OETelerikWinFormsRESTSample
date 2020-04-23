@@ -21,7 +21,7 @@ BLOCK-LEVEL ON ERROR UNDO, THROW.
 CLASS Utils.TempTableToDataTableConverter: 
 
     {Entities/customer.i}
-    METHOD PUBLIC DataTable GetDataTable(INPUT DATASET dsCustomer):
+    METHOD PUBLIC DataTable GetCustomersDataTable(INPUT DATASET dsCustomer):
         DEFINE VARIABLE oServiceClient AS Service.ServiceClient NO-UNDO.      
         
         DEFINE VARIABLE iSize           AS INTEGER      NO-UNDO.

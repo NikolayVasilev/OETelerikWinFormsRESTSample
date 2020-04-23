@@ -22,7 +22,6 @@ BLOCK-LEVEL ON ERROR UNDO, THROW.
 
 CLASS Form1 INHERITS Form: 
 	
-    {Entities/Customer.i}
     DEFINE PRIVATE VARIABLE components AS System.ComponentModel.IContainer NO-UNDO.
     DEFINE PRIVATE VARIABLE CustomersGridView AS Telerik.WinControls.UI.RadGridView NO-UNDO.
     DEFINE PRIVATE VARIABLE fluentDarkTheme1 AS Telerik.WinControls.Themes.FluentDarkTheme NO-UNDO.
@@ -126,20 +125,10 @@ CLASS Form1 INHERITS Form:
     END METHOD.
     
     METHOD PRIVATE VOID PrepareGridView():
-        /*            this.radGridView1.BindingContext= new BindingContext()                 */
-        /*            this.radGridView1.DataSource= dt                                       */
-        /*            this.radGridView1.AutoSizeColumnsMode= GridViewAutoSizeColumnsMode.Fill*/
-
-        /*        THIS-OBJECT:CustomersGridView:BindingContext = new BindingContext().*/
-        DEFINE VARIABLE oDataTableConverter AS TempTableToDataTableConverter NO-UNDO.
         DEFINE VARIABLE oCustomersDataTable AS DataTable NO-UNDO.
-        ASSIGN oDataTableConverter = NEW TempTableToDataTableConverter().
-        
-        THIS-OBJECT:oSportsDataServiceClient:GetCustomers(OUTPUT DATASET dsCustomer BY-REFERENCE).
-        
-        oCustomersDataTable = oDataTableConverter:GetDataTable(INPUT DATASET dsCustomer BY-REFERENCE).
-        
-        
+       
+        ASSIGN oCustomersDataTable = THIS-OBJECT:oSportsDataServiceClient:GetCustomers().
+             
         THIS-OBJECT:CustomersGridView:DataSource = oCustomersDataTable.
         THIS-OBJECT:CustomersGridView:AutoSizeColumnsMode = GridViewAutoSizeColumnsMode:Fill.
     END.
@@ -155,25 +144,11 @@ CLASS Form1 INHERITS Form:
 
     END METHOD.
 
-    METHOD PRIVATE VOID telerikButton1_Clicked( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
+    METHOD PRIVATE VOID telerikButton1_Clicked( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):        
         
-/*        DEFINE VARIABLE oServiceClient AS Service.ServiceClient NO-UNDO.    */
-/*                                                                            */
-/*        ASSIGN oServiceClient = NEW ServiceClient("Customer").              */
-/*                                                                            */
-/*        oServiceClient:GetCustomers(OUTPUT DATASET dsCustomer BY-REFERENCE).*/
-/*                                                                            */
-/*        FOR EACH ttCustomer :                                               */
-/*            DISPLAY ttCustomer.Name.                                        */
-/*        END.                                                                */
+        DEFINE VARIABLE oCustomersDataTable AS DataTable NO-UNDO.      
         
-        DEFINE VARIABLE oDataTableConverter AS TempTableToDataTableConverter NO-UNDO.
-        DEFINE VARIABLE oCustomersDataTable AS DataTable NO-UNDO.
-        ASSIGN oDataTableConverter = NEW TempTableToDataTableConverter().
-        
-        THIS-OBJECT:oSportsDataServiceClient:GetCustomers(OUTPUT DATASET dsCustomer BY-REFERENCE).
-        
-        oCustomersDataTable = oDataTableConverter:GetDataTable(INPUT DATASET dsCustomer BY-REFERENCE).
+        oCustomersDataTable = THIS-OBJECT:oSportsDataServiceClient:GetCustomers().
         
         MESSAGE "Number of row in the data table:" oCustomersDataTable:Rows:Count
             VIEW-AS ALERT-BOX INFORMATION.
