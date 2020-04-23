@@ -30,15 +30,13 @@ CLASS Form1 INHERITS Form:
     DEFINE PRIVATE VARIABLE office2013DarkTheme1 AS Telerik.WinControls.Themes.Office2013DarkTheme NO-UNDO.
     DEFINE PRIVATE VARIABLE textBox1 AS System.Windows.Forms.TextBox NO-UNDO.
     DEFINE PRIVATE VARIABLE telerikButton1 AS RadButton NO-UNDO.
-    DEFINE VARIABLE oSportsDataServiceClient AS Service.ServiceClient NO-UNDO.
-	DEFINE VARIABLE oViewModel AS CustomerWindowViewModel NO-UNDO.
+    DEFINE VARIABLE oViewModel AS CustomerWindowViewModel NO-UNDO.
 		
     CONSTRUCTOR PUBLIC Form1 (  ):
 
         InitializeComponent().
         THIS-OBJECT:ComponentsCollection:Add(THIS-OBJECT:components).
         
-        THIS-OBJECT:oSportsDataServiceClient = NEW ServiceClient("Production").
         THIS-OBJECT:oViewModel = NEW CustomerWindowViewModel().
         
         CATCH e AS Progress.Lang.Error:
@@ -52,8 +50,23 @@ CLASS Form1 INHERITS Form:
      Notes:
     ------------------------------------------------------------------------------*/
     @VisualDesigner.
+    METHOD PRIVATE VOID CustomersGridView_SelectionChanged( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
+		
+        IF THIS-OBJECT:CustomersGridView:SelectedRows:Count > 0 THEN DO:
+            THIS-OBJECT:oViewModel:SelectedDataRow = DYNAMIC-CAST (THIS-OBJECT:CustomersGridView:CurrentRow:DataBoundItem, "System.Data.DataRowView").
+        END.
+		
+        RETURN.
+
+    END METHOD.
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+    @VisualDesigner.
     METHOD PRIVATE VOID Form1_Load( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
-		THIS-OBJECT:PrepareGridView().
+        THIS-OBJECT:PrepareGridView().
         RETURN.
 
     END METHOD.
@@ -108,6 +121,7 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:CustomersGridView:Size = NEW System.Drawing.Size(747, 325).
         THIS-OBJECT:CustomersGridView:TabIndex = 2.
         THIS-OBJECT:CustomersGridView:ThemeName = "FluentDark".
+        THIS-OBJECT:CustomersGridView:SelectionChanged:Subscribe(THIS-OBJECT:CustomersGridView_SelectionChanged).
         /*  */
         /* Form1 */
         /*  */
@@ -130,11 +144,9 @@ CLASS Form1 INHERITS Form:
     END METHOD.
     
     METHOD PRIVATE VOID PrepareGridView():
-        DEFINE VARIABLE oCustomersDataTable AS DataTable NO-UNDO.
-       
-        ASSIGN oCustomersDataTable = THIS-OBJECT:oSportsDataServiceClient:GetCustomers().
-             
-        THIS-OBJECT:CustomersGridView:DataSource = oCustomersDataTable.
+        THIS-OBJECT:oViewModel:RefreshCustomers().
+        
+        THIS-OBJECT:CustomersGridView:DataSource = THIS-OBJECT:oViewModel:CustomersDataTable.
         THIS-OBJECT:CustomersGridView:AutoSizeColumnsMode = GridViewAutoSizeColumnsMode:Fill.
     END.
 
@@ -151,16 +163,12 @@ CLASS Form1 INHERITS Form:
 
     METHOD PRIVATE VOID telerikButton1_Clicked( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):        
         
-        DEFINE VARIABLE oCustomersDataTable AS DataTable NO-UNDO.      
-        DEFINE VARIABLE oCustomerDataRow AS DataRow NO-UNDO.  
-        
-        oCustomerDataRow = THIS-OBJECT:oSportsDataServiceClient:GetCustomerWithId(3000).
         
         
-        MESSAGE oCustomerDataRow[1]
-        VIEW-AS ALERT-BOX.
-/*        MESSAGE "Number of row in the data table:" oCustomersDataTable:Rows:Count*/
-/*            VIEW-AS ALERT-BOX INFORMATION.                                       */
+        MESSAGE "Clicked"
+            VIEW-AS ALERT-BOX.
+        /*        MESSAGE "Number of row in the data table:" oCustomersDataTable:Rows:Count*/
+        /*            VIEW-AS ALERT-BOX INFORMATION.                                       */
         
         RETURN.
     END METHOD.

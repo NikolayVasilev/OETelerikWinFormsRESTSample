@@ -108,7 +108,7 @@ CLASS Service.ServiceClient:
         ASSIGN oDataTableConverter = NEW TempTableToDataTableConverter().
         
         ASSIGN oJsonResponse = THIS-OBJECT:GetResourceObject("Customer").
-        DATASET dsCustomer:READ-JSON("JSONObject", oJsonResponse, "REPLACE").
+        DATASET dsCustomer:READ-JSON("JSONObject", oJsonResponse, "EMPTY").
         
         oCustomersDataTable = oDataTableConverter:GetCustomersDataTable(INPUT DATASET dsCustomer BY-REFERENCE).           
 
