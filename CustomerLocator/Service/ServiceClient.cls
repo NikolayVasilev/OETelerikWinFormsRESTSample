@@ -20,8 +20,9 @@ USING OpenEdge.Net.HTTP.RequestBuilder FROM PROPATH.
 USING OpenEdge.Net.URI FROM PROPATH.
 USING Progress.Json.ObjectModel.JsonObject FROM PROPATH.
 USING Progress.Lang.AppError FROM PROPATH.
-USING System.Data.DataTable FROM ASSEMBLY.
+USING System.Data.* FROM ASSEMBLY.
 USING Utils.TempTableToDataTableConverter FROM PROPATH.
+
 
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 
@@ -112,6 +113,25 @@ CLASS Service.ServiceClient:
         oCustomersDataTable = oDataTableConverter:GetCustomersDataTable(INPUT DATASET dsCustomer BY-REFERENCE).           
 
         RETURN oCustomersDataTable.
+        
+    END METHOD.
+    
+    METHOD PUBLIC DataRow GetCustomerWithId(id AS INTEGER):
+        DEFINE VARIABLE oJsonResponse AS JsonObject    NO-UNDO.
+        DEFINE VARIABLE oDataTableConverter AS TempTableToDataTableConverter NO-UNDO.
+        DEFINE VARIABLE oCustomersDataTable AS DataTable NO-UNDO.
+        ASSIGN oDataTableConverter = NEW TempTableToDataTableConverter().
+        
+        ASSIGN oJsonResponse = THIS-OBJECT:GetResourceObject("Customer?filter=CustNum=" + STRING(id)).
+        DATASET dsCustomer:READ-JSON("JSONObject", oJsonResponse, "EMPTY").
+        
+        oCustomersDataTable = oDataTableConverter:GetCustomersDataTable(INPUT DATASET dsCustomer BY-REFERENCE).           
+        
+        IF oCustomersDataTable:Rows:Count > 0 THEN DO:
+            RETURN oCustomersDataTable:Rows[0].
+        END. 
+        
+        RETURN.
         
     END METHOD.
 

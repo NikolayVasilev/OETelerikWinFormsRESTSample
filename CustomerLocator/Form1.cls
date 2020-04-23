@@ -17,6 +17,8 @@ USING Telerik.WinControls.ThemeResolutionService FROM ASSEMBLY.
 USING Service.ServiceClient FROM PROPATH.
 USING Utils.TempTableToDataTableConverter FROM PROPATH.
 USING System.Data.DataTable FROM ASSEMBLY.
+USING ViewModels.CustomerWindowViewModel FROM PROPATH.
+USING System.Data.DataRow FROM ASSEMBLY.
 
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 
@@ -29,13 +31,15 @@ CLASS Form1 INHERITS Form:
     DEFINE PRIVATE VARIABLE textBox1 AS System.Windows.Forms.TextBox NO-UNDO.
     DEFINE PRIVATE VARIABLE telerikButton1 AS RadButton NO-UNDO.
     DEFINE VARIABLE oSportsDataServiceClient AS Service.ServiceClient NO-UNDO.
+	DEFINE VARIABLE oViewModel AS CustomerWindowViewModel NO-UNDO.
 		
     CONSTRUCTOR PUBLIC Form1 (  ):
 
         InitializeComponent().
         THIS-OBJECT:ComponentsCollection:Add(THIS-OBJECT:components).
         
-        oSportsDataServiceClient = NEW ServiceClient("Production").
+        THIS-OBJECT:oSportsDataServiceClient = NEW ServiceClient("Production").
+        THIS-OBJECT:oViewModel = NEW CustomerWindowViewModel().
         
         CATCH e AS Progress.Lang.Error:
             UNDO, THROW e.
@@ -101,12 +105,13 @@ CLASS Form1 INHERITS Form:
         /*  */
         THIS-OBJECT:CustomersGridView:MasterTemplate:ViewDefinition = tableViewDefinition1.
         THIS-OBJECT:CustomersGridView:Name = "CustomersGridView".
-        THIS-OBJECT:CustomersGridView:Size = NEW System.Drawing.Size(747, 562).
+        THIS-OBJECT:CustomersGridView:Size = NEW System.Drawing.Size(747, 325).
         THIS-OBJECT:CustomersGridView:TabIndex = 2.
         THIS-OBJECT:CustomersGridView:ThemeName = "FluentDark".
         /*  */
         /* Form1 */
         /*  */
+        THIS-OBJECT:BackColor = System.Drawing.Color:DimGray.
         THIS-OBJECT:ClientSize = NEW System.Drawing.Size(877, 586).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomersGridView).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:textBox1).
@@ -147,11 +152,15 @@ CLASS Form1 INHERITS Form:
     METHOD PRIVATE VOID telerikButton1_Clicked( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):        
         
         DEFINE VARIABLE oCustomersDataTable AS DataTable NO-UNDO.      
+        DEFINE VARIABLE oCustomerDataRow AS DataRow NO-UNDO.  
         
-        oCustomersDataTable = THIS-OBJECT:oSportsDataServiceClient:GetCustomers().
+        oCustomerDataRow = THIS-OBJECT:oSportsDataServiceClient:GetCustomerWithId(3000).
         
-        MESSAGE "Number of row in the data table:" oCustomersDataTable:Rows:Count
-            VIEW-AS ALERT-BOX INFORMATION.
+        
+        MESSAGE oCustomerDataRow[1]
+        VIEW-AS ALERT-BOX.
+/*        MESSAGE "Number of row in the data table:" oCustomersDataTable:Rows:Count*/
+/*            VIEW-AS ALERT-BOX INFORMATION.                                       */
         
         RETURN.
     END METHOD.
