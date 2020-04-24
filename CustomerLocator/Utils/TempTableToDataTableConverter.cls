@@ -31,16 +31,24 @@ CLASS Utils.TempTableToDataTableConverter:
         DEFINE VARIABLE p               AS MEMPTR       NO-UNDO.
 
         customersTable = NEW DataTable("ttCustomerRow").
-
+        
         customersTable:Columns:Add(NEW DataColumn("CustNum", System.Type:GetType("System.Int32"))).
         customersTable:Columns:Add(NEW DataColumn("Name", System.Type:GetType("System.String"))).
         customersTable:Columns:Add(NEW DataColumn("Country", System.Type:GetType("System.String"))).
         customersTable:Columns:Add(NEW DataColumn("State", System.Type:GetType("System.String"))).
         customersTable:Columns:Add(NEW DataColumn("Address", System.Type:GetType("System.String"))).
         customersTable:Columns:Add(NEW DataColumn("Address2", System.Type:GetType("System.String"))).
-        customersTable:Columns:Add(NEW DataColumn("City", System.Type:GetType("System.String"))).      
+        customersTable:Columns:Add(NEW DataColumn("City", System.Type:GetType("System.String"))).
+        customersTable:Columns:Add(NEW DataColumn("PostalCode", System.Type:GetType("System.String"))).
         customersTable:Columns:Add(NEW DataColumn("Phone", System.Type:GetType("System.String"))).
+        customersTable:Columns:Add(NEW DataColumn("SalesRep", System.Type:GetType("System.String"))).
+        customersTable:Columns:Add(NEW DataColumn("CreditLimit", System.Type:GetType("System.String"))).
+        customersTable:Columns:Add(NEW DataColumn("Balance", System.Type:GetType("System.String"))).
+        customersTable:Columns:Add(NEW DataColumn("Terms", System.Type:GetType("System.String"))).
+        customersTable:Columns:Add(NEW DataColumn("Discount", System.Type:GetType("System.String"))).
         customersTable:Columns:Add(NEW DataColumn("Comments", System.Type:GetType("System.String"))).
+        customersTable:Columns:Add(NEW DataColumn("Fax", System.Type:GetType("System.String"))).
+        customersTable:Columns:Add(NEW DataColumn("EmailAddress", System.Type:GetType("System.String"))).
         
   
         TEMP-TABLE ttCustomer:WRITE-XML("memptr", p).

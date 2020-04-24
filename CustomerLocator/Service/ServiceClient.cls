@@ -41,7 +41,7 @@ CLASS Service.ServiceClient:
         SUPER ().
         
         
-        IF serviceBase = "Productions" THEN DO:
+        IF serviceBase = "Production" THEN DO:
             ASSIGN THIS-OBJECT:baseServiceUrl = "/SportsData/web/pdo/SportsDataService/". // TODO: Replace with injected value.
         END.
         
