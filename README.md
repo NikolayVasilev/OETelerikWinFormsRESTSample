@@ -1,6 +1,7 @@
 # OETelerikWinFormsRESTSample
 
  This repo containing GUI for .NET OpenEdge examples of using [Telerik UI for WinForms](https://www.telerik.com/products/winforms.aspx) components for creating beautiful desktop applicatons.
+ It utilises a simple JSDO REST service for data access. 
 
  The project was originally created with PDSOE 12.2.
 
