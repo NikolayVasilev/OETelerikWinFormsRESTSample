@@ -25,6 +25,31 @@ CLASS ViewModels.CustomerWindowViewModel:
     
     DEFINE VARIABLE oSportsDataServiceClient AS Service.ServiceClient NO-UNDO.
     
+    DEFINE PUBLIC PROPERTY CustomerAddress AS CHARACTER NO-UNDO 
+        GET:
+            DEFINE VARIABLE address AS CHARACTER NO-UNDO.
+            
+            IF THIS-OBJECT:SelectedDataRow NE ? THEN DO:
+                address = STRING(THIS-OBJECT:SelectedDataRow["City"]) + 
+                    ", " + 
+                    STRING(THIS-OBJECT:SelectedDataRow["Address"]) + 
+                    " " + 
+                    STRING(THIS-OBJECT:SelectedDataRow["Address2"]) +
+                    ", "               
+                    .
+                
+                IF (THIS-OBJECT:SelectedDataRow["State"] NE ?)  AND (STRING(THIS-OBJECT:SelectedDataRow["State"]) NE "") THEN DO:
+                    address = address + 
+                        STRING(THIS-OBJECT:SelectedDataRow["State"]).
+                END.
+                
+                address = address + 
+                        STRING(THIS-OBJECT:SelectedDataRow["Country"]).
+            END.
+            
+            RETURN address.
+        END GET.
+    
     DEFINE PUBLIC PROPERTY SelectedDataRow AS DataRowView NO-UNDO 
         GET.
         SET.

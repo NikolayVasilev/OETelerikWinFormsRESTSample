@@ -63,6 +63,8 @@ CLASS Form1 INHERITS Form:
         END.
         
         THIS-OBJECT:CustomerPropertyGrid:SelectedObject = THIS-OBJECT:oViewModel:SelectedDataRow.
+        
+        THIS-OBJECT:SetCustomerLocation().
 		
         RETURN.
 
@@ -231,6 +233,20 @@ CLASS Form1 INHERITS Form:
             textBoxColumn:MaxLength = 50
             textBoxColumn:Width = 150.
         THIS-OBJECT:CustomersGridView:MasterTemplate:Columns:Add(textBoxColumn).
+    END.
+    
+    METHOD PRIVATE VOID SetCustomerLocation():
+        DEFINE VARIABLE mapRequest AS Telerik.WinControls.UI.Map.Bing.SearchRequest NO-UNDO.
+        DEFINE VARIABLE bingProvider AS BingRestMapProvider NO-UNDO.
+        
+        IF THIS-OBJECT:CustomerAddressMap:Providers:Count > 0 THEN DO:
+            mapRequest = NEW Telerik.WinControls.UI.Map.Bing.SearchRequest().
+            mapRequest:Query = THIS-OBJECT:oViewModel:CustomerAddress.
+            mapRequest:SearchOptions:Count = 10.
+            mapRequest:SearchOptions:QueryParse = TRUE.
+            bingProvider = DYNAMIC-CAST(THIS-OBJECT:CustomerAddressMap:Providers[0], "Telerik.WinControls.UI.BingRestMapProvider").
+            bingProvider:SearchAsync(mapRequest).
+        END.
     END.
     
     METHOD PRIVATE VOID PrepareMap():
