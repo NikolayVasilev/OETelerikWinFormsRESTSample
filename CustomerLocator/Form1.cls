@@ -19,7 +19,6 @@ USING Utils.TempTableToDataTableConverter FROM PROPATH.
 USING System.Data.DataTable FROM ASSEMBLY.
 USING ViewModels.CustomerWindowViewModel FROM PROPATH.
 USING System.Data.DataRow FROM ASSEMBLY.
-USING StringGenerator.SampleStringGenerator FROM ASSEMBLY.
 USING System.Drawing.ContentAlignment FROM ASSEMBLY.
 USING System.Drawing.Color FROM ASSEMBLY.
 USING System.Math FROM ASSEMBLY.
@@ -90,8 +89,8 @@ CLASS Form1 INHERITS Form:
         
         Modifying the contents of this method using a code editor will invalidate any support for this file. */
         @VisualDesigner.FormMember (NeedsInitialize="true").
-        DEFINE VARIABLE tableViewDefinition1 AS Telerik.WinControls.UI.TableViewDefinition NO-UNDO.
-        tableViewDefinition1 = NEW Telerik.WinControls.UI.TableViewDefinition().
+        DEFINE VARIABLE tableViewDefinition2 AS Telerik.WinControls.UI.TableViewDefinition NO-UNDO.
+        tableViewDefinition2 = NEW Telerik.WinControls.UI.TableViewDefinition().
         THIS-OBJECT:textBox1 = NEW System.Windows.Forms.TextBox().
         THIS-OBJECT:telerikButton1 = NEW Telerik.WinControls.UI.RadButton().
         THIS-OBJECT:office2013DarkTheme1 = NEW Telerik.WinControls.Themes.Office2013DarkTheme().
@@ -131,10 +130,10 @@ CLASS Form1 INHERITS Form:
         /*  */
         /*  */
         THIS-OBJECT:CustomersGridView:MasterTemplate:AutoGenerateColumns = FALSE.
-        THIS-OBJECT:CustomersGridView:MasterTemplate:ViewDefinition = tableViewDefinition1.
+        THIS-OBJECT:CustomersGridView:MasterTemplate:ViewDefinition = tableViewDefinition2.
         THIS-OBJECT:CustomersGridView:Name = "CustomersGridView".
         THIS-OBJECT:CustomersGridView:ReadOnly = TRUE.
-        THIS-OBJECT:CustomersGridView:Size = NEW System.Drawing.Size(747, 325).
+        THIS-OBJECT:CustomersGridView:Size = NEW System.Drawing.Size(1028, 325).
         THIS-OBJECT:CustomersGridView:TabIndex = 2.
         THIS-OBJECT:CustomersGridView:ThemeName = "FluentDark".
         THIS-OBJECT:CustomersGridView:SelectionChanged:Subscribe(THIS-OBJECT:CustomersGridView_SelectionChanged).
@@ -148,7 +147,7 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:CustomerPropertyGrid:Location = NEW System.Drawing.Point(118, 343).
         THIS-OBJECT:CustomerPropertyGrid:Name = "CustomerPropertyGrid".
         THIS-OBJECT:CustomerPropertyGrid:ReadOnly = TRUE.
-        THIS-OBJECT:CustomerPropertyGrid:Size = NEW System.Drawing.Size(361, 231).
+        THIS-OBJECT:CustomerPropertyGrid:Size = NEW System.Drawing.Size(361, 353).
         THIS-OBJECT:CustomerPropertyGrid:TabIndex = 3.
         THIS-OBJECT:CustomerPropertyGrid:ThemeName = "FluentDark".
         /*  */
@@ -157,14 +156,15 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:CustomerAddressMap:EnableTheming = FALSE.
         THIS-OBJECT:CustomerAddressMap:Location = NEW System.Drawing.Point(485, 343).
         THIS-OBJECT:CustomerAddressMap:Name = "CustomerAddressMap".
-        THIS-OBJECT:CustomerAddressMap:Size = NEW System.Drawing.Size(380, 231).
+        THIS-OBJECT:CustomerAddressMap:Size = NEW System.Drawing.Size(661, 353).
         THIS-OBJECT:CustomerAddressMap:TabIndex = 4.
         THIS-OBJECT:CustomerAddressMap:ThemeName = "FluentDark".
+        CAST(THIS-OBJECT:CustomerAddressMap:GetChildAt(0):GetChildAt(4), Telerik.WinControls.UI.MiniMapElement):Visibility = Telerik.WinControls.ElementVisibility:Collapsed.
         /*  */
         /* Form1 */
         /*  */
         THIS-OBJECT:BackColor = System.Drawing.Color:DimGray.
-        THIS-OBJECT:ClientSize = NEW System.Drawing.Size(877, 586).
+        THIS-OBJECT:ClientSize = NEW System.Drawing.Size(1158, 708).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomerAddressMap).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomerPropertyGrid).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomersGridView).
@@ -278,22 +278,21 @@ CLASS Form1 INHERITS Form:
         DEFINE VARIABLE point AS Telerik.WinControls.UI.Map.PointG NO-UNDO. 
         DEFINE VARIABLE pin AS MapPin NO-UNDO.
         
-        
         eventArgs = DYNAMIC-CAST (e, "Telerik.WinControls.UI.SearchCompletedEventArgs").
         
-
-        allPoints = NEW Telerik.WinControls.UI.Map.RectangleG(Double:MinValue, Double:MaxValue, Double:MaxValue, Double:MinValue).
+        allPoints = NEW Telerik.WinControls.UI.Map.RectangleG(-200000, 200000, 200000, -200000).
         THIS-OBJECT:CustomerAddressMap:Layers["Pins"]:Clear().
         
         locationIndex = 0.
         
-        DO locationIndex = 0 TO eventArgs:Locations:Length - 1:
-            location = DYNAMIC-CAST(eventArgs:Locations:GetValue(locationIndex), "Telerik.WinControls.UI.Map.Bing.Location").
+        DO locationIndex = 1 TO eventArgs:Locations:Length:
+            location = DYNAMIC-CAST(eventArgs:Locations:GetValue(locationIndex - 1), "Telerik.WinControls.UI.Map.Bing.Location").
             
-            location:Point:Coordinates.
-/*            point = NEW Telerik.WinControls.UI.Map.PointG(location:Point:Coordinates[0], location:Point:Coordinates[1]).*/
-            
-            point = NEW Telerik.WinControls.UI.Map.PointG(0,0).
+            point = NEW Telerik.WinControls.UI.Map.PointG(
+                DYNAMIC-CAST (location:Point:Coordinates:GETVALUE(0), "System.Double"), 
+                DYNAMIC-CAST (location:Point:Coordinates:GETVALUE(1), "System.Double")
+                ).
+
             pin = NEW MapPin(point).
             pin:Size = NEW System.Drawing.Size(20, 40).
             pin:BackColor = Color:Red.
@@ -308,20 +307,25 @@ CLASS Form1 INHERITS Form:
         
         IF (eventArgs:Locations:Length > 0) THEN DO:
         
-            if (eventArgs:Locations:Length = 1) THEN DO:
+            IF (eventArgs:Locations:Length = 1) THEN DO:
             
-                //THIS-OBJECT:CustomerAddressMap:BringIntoView(new Telerik.WinControls.UI.Map.PointG(eventArgs:Locations[0]:Point:Coordinates[0], eventArgs:Locations[0]:Point:Coordinates[1])).
+                location = DYNAMIC-CAST(eventArgs:Locations:GetValue(0), "Telerik.WinControls.UI.Map.Bing.Location").
+                
+                THIS-OBJECT:CustomerAddressMap:BringIntoView(NEW Telerik.WinControls.UI.Map.PointG(
+                    DYNAMIC-CAST(location:Point:Coordinates:GETVALUE(0), "System.Double"), 
+                    DYNAMIC-CAST(location:Point:Coordinates:GETVALUE(1), "System.Double"))
+                    ).
             END.
-            else do:           
+            ELSE DO:           
                 THIS-OBJECT:CustomerAddressMap:MapElement:BringIntoView(allPoints).
                 THIS-OBJECT:CustomerAddressMap:Zoom(THIS-OBJECT:CustomerAddressMap:MapElement:ZoomLevel - 1).
-            end.
+            END.
         END.
-        else do:
+        ELSE DO:
         
             MESSAGE "No result found for the provided search query!"
-            VIEW-AS ALERT-BOX.
-        end.
+                VIEW-AS ALERT-BOX.
+        END.
 
 
 
