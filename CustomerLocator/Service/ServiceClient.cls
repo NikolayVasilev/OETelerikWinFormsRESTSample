@@ -40,7 +40,10 @@ CLASS Service.ServiceClient:
     CONSTRUCTOR PUBLIC ServiceClient ( serviceBase AS CHARACTER ):
         SUPER ().
         
-        ASSIGN THIS-OBJECT:baseServiceUrl = "/SportsData/web/pdo/SportsDataService/". // TODO: Replace with injected value.
+        
+        IF serviceBase = "Productions" THEN DO:
+            ASSIGN THIS-OBJECT:baseServiceUrl = "/SportsData/web/pdo/SportsDataService/". // TODO: Replace with injected value.
+        END.
         
     END CONSTRUCTOR.
     

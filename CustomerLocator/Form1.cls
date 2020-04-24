@@ -43,8 +43,6 @@ CLASS Form1 INHERITS Form:
         InitializeComponent().
         THIS-OBJECT:ComponentsCollection:Add(THIS-OBJECT:components).
         
-        THIS-OBJECT:oViewModel = NEW CustomerWindowViewModel().
-        
         CATCH e AS Progress.Lang.Error:
             UNDO, THROW e.
         END CATCH.
@@ -76,6 +74,9 @@ CLASS Form1 INHERITS Form:
     ------------------------------------------------------------------------------*/
     @VisualDesigner.
     METHOD PRIVATE VOID Form1_Load( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
+        
+        THIS-OBJECT:oViewModel = NEW CustomerWindowViewModel().
+        
         THIS-OBJECT:PrepareGridView().
         THIS-OBJECT:PrepareMap().
         RETURN.
