@@ -134,7 +134,7 @@ CLASS Service.ServiceClient:
             RETURN oCustomersDataTable:Rows[0].
         END. 
         
-        RETURN.
+        RETURN ?.
         
     END METHOD.
 
