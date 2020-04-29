@@ -32,6 +32,11 @@
 
  If the .dlls have been added as Local Assembles, the assemblies.xml files must be in the same folder as the .dlls
 
+## Map initial set-up
+
+ Get a Bing map key as instructed in the official MSDN article: https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key
+ 
+ Replace "REPLACE_THIS_WITH_YOUR_BING_MAPS_KEY" in Form1.cls line 263 with your key. 
 
 ## Running the demos
 
