@@ -42,7 +42,7 @@ CLASS Service.ServiceClient:
         
         
         IF serviceBase = "Production" THEN DO:
-            ASSIGN THIS-OBJECT:baseServiceUrl = "/SportsData/web/pdo/SportsDataService/". // TODO: Replace with injected value.
+            ASSIGN THIS-OBJECT:baseServiceUrl = "/SportsData/web/pdo/SportsDataService/".
         END.
         
     END CONSTRUCTOR.

@@ -23,14 +23,15 @@ USING System.Drawing.ContentAlignment FROM ASSEMBLY.
 USING System.Drawing.Color FROM ASSEMBLY.
 USING System.Math FROM ASSEMBLY.
 USING System.Double FROM ASSEMBLY.
+USING StringGenerator.SampleStringGenerator FROM ASSEMBLY.
 
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 
 CLASS Form1 INHERITS Form: 
 	
     DEFINE PRIVATE VARIABLE components AS System.ComponentModel.IContainer NO-UNDO.
-    DEFINE PRIVATE VARIABLE CustomerPropertyGrid AS Telerik.WinControls.UI.RadPropertyGrid NO-UNDO.
     DEFINE PRIVATE VARIABLE CustomerAddressMap AS Telerik.WinControls.UI.RadMap NO-UNDO.
+    DEFINE PRIVATE VARIABLE CustomerPropertyGrid AS Telerik.WinControls.UI.RadPropertyGrid NO-UNDO.
     DEFINE PRIVATE VARIABLE CustomersGridView AS Telerik.WinControls.UI.RadGridView NO-UNDO.
     DEFINE PRIVATE VARIABLE fluentDarkTheme1 AS Telerik.WinControls.Themes.FluentDarkTheme NO-UNDO.
     DEFINE PRIVATE VARIABLE office2013DarkTheme1 AS Telerik.WinControls.Themes.Office2013DarkTheme NO-UNDO.
@@ -92,20 +93,20 @@ CLASS Form1 INHERITS Form:
         
         Modifying the contents of this method using a code editor will invalidate any support for this file. */
         @VisualDesigner.FormMember (NeedsInitialize="true").
-        DEFINE VARIABLE tableViewDefinition2 AS Telerik.WinControls.UI.TableViewDefinition NO-UNDO.
-        tableViewDefinition2 = NEW Telerik.WinControls.UI.TableViewDefinition().
+        DEFINE VARIABLE tableViewDefinition1 AS Telerik.WinControls.UI.TableViewDefinition NO-UNDO.
+        tableViewDefinition1 = NEW Telerik.WinControls.UI.TableViewDefinition().
         THIS-OBJECT:textBox1 = NEW System.Windows.Forms.TextBox().
         THIS-OBJECT:telerikButton1 = NEW Telerik.WinControls.UI.RadButton().
         THIS-OBJECT:office2013DarkTheme1 = NEW Telerik.WinControls.Themes.Office2013DarkTheme().
         THIS-OBJECT:CustomersGridView = NEW Telerik.WinControls.UI.RadGridView().
         THIS-OBJECT:fluentDarkTheme1 = NEW Telerik.WinControls.Themes.FluentDarkTheme().
-        THIS-OBJECT:CustomerPropertyGrid = NEW Telerik.WinControls.UI.RadPropertyGrid().
         THIS-OBJECT:CustomerAddressMap = NEW Telerik.WinControls.UI.RadMap().
+        THIS-OBJECT:CustomerPropertyGrid = NEW Telerik.WinControls.UI.RadPropertyGrid().
         CAST(THIS-OBJECT:telerikButton1, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomersGridView, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomersGridView:MasterTemplate, System.ComponentModel.ISupportInitialize):BeginInit().
-        CAST(THIS-OBJECT:CustomerPropertyGrid, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomerAddressMap, System.ComponentModel.ISupportInitialize):BeginInit().
+        CAST(THIS-OBJECT:CustomerPropertyGrid, System.ComponentModel.ISupportInitialize):BeginInit().
         THIS-OBJECT:SuspendLayout().
         /*  */
         /* textBox1 */
@@ -133,26 +134,13 @@ CLASS Form1 INHERITS Form:
         /*  */
         /*  */
         THIS-OBJECT:CustomersGridView:MasterTemplate:AutoGenerateColumns = FALSE.
-        THIS-OBJECT:CustomersGridView:MasterTemplate:ViewDefinition = tableViewDefinition2.
+        THIS-OBJECT:CustomersGridView:MasterTemplate:ViewDefinition = tableViewDefinition1.
         THIS-OBJECT:CustomersGridView:Name = "CustomersGridView".
         THIS-OBJECT:CustomersGridView:ReadOnly = TRUE.
         THIS-OBJECT:CustomersGridView:Size = NEW System.Drawing.Size(1028, 325).
         THIS-OBJECT:CustomersGridView:TabIndex = 2.
         THIS-OBJECT:CustomersGridView:ThemeName = "FluentDark".
         THIS-OBJECT:CustomersGridView:SelectionChanged:Subscribe(THIS-OBJECT:CustomersGridView_SelectionChanged).
-        /*  */
-        /* CustomerPropertyGrid */
-        /*  */
-        THIS-OBJECT:CustomerPropertyGrid:EnableCustomGrouping = TRUE.
-        THIS-OBJECT:CustomerPropertyGrid:HelpVisible = FALSE.
-        THIS-OBJECT:CustomerPropertyGrid:ItemHeight = 28.
-        THIS-OBJECT:CustomerPropertyGrid:ItemIndent = 28.
-        THIS-OBJECT:CustomerPropertyGrid:Location = NEW System.Drawing.Point(118, 343).
-        THIS-OBJECT:CustomerPropertyGrid:Name = "CustomerPropertyGrid".
-        THIS-OBJECT:CustomerPropertyGrid:ReadOnly = TRUE.
-        THIS-OBJECT:CustomerPropertyGrid:Size = NEW System.Drawing.Size(361, 353).
-        THIS-OBJECT:CustomerPropertyGrid:TabIndex = 3.
-        THIS-OBJECT:CustomerPropertyGrid:ThemeName = "FluentDark".
         /*  */
         /* CustomerAddressMap */
         /*  */
@@ -164,12 +152,23 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:CustomerAddressMap:ThemeName = "FluentDark".
         CAST(THIS-OBJECT:CustomerAddressMap:GetChildAt(0):GetChildAt(4), Telerik.WinControls.UI.MiniMapElement):Visibility = Telerik.WinControls.ElementVisibility:Collapsed.
         /*  */
+        /* CustomerPropertyGrid */
+        /*  */
+        THIS-OBJECT:CustomerPropertyGrid:HelpVisible = FALSE.
+        THIS-OBJECT:CustomerPropertyGrid:ItemHeight = 28.
+        THIS-OBJECT:CustomerPropertyGrid:ItemIndent = 28.
+        THIS-OBJECT:CustomerPropertyGrid:Location = NEW System.Drawing.Point(118, 344).
+        THIS-OBJECT:CustomerPropertyGrid:Name = "CustomerPropertyGrid".
+        THIS-OBJECT:CustomerPropertyGrid:Size = NEW System.Drawing.Size(361, 352).
+        THIS-OBJECT:CustomerPropertyGrid:TabIndex = 5.
+        THIS-OBJECT:CustomerPropertyGrid:ThemeName = "FluentDark".
+        /*  */
         /* Form1 */
         /*  */
         THIS-OBJECT:BackColor = System.Drawing.Color:DimGray.
         THIS-OBJECT:ClientSize = NEW System.Drawing.Size(1158, 708).
-        THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomerAddressMap).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomerPropertyGrid).
+        THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomerAddressMap).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomersGridView).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:textBox1).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:telerikButton1).
@@ -179,8 +178,8 @@ CLASS Form1 INHERITS Form:
         CAST(THIS-OBJECT:telerikButton1, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomersGridView:MasterTemplate, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomersGridView, System.ComponentModel.ISupportInitialize):EndInit().
-        CAST(THIS-OBJECT:CustomerPropertyGrid, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomerAddressMap, System.ComponentModel.ISupportInitialize):EndInit().
+        CAST(THIS-OBJECT:CustomerPropertyGrid, System.ComponentModel.ISupportInitialize):EndInit().
         THIS-OBJECT:ResumeLayout(FALSE).
         THIS-OBJECT:PerformLayout().
         CATCH e AS Progress.Lang.Error:
@@ -259,7 +258,11 @@ CLASS Form1 INHERITS Form:
         cacheFolder = "cache".
         bingProvider = NEW Telerik.WinControls.UI.BingRestMapProvider().
         bingProvider:UseSession = TRUE.
-        bingProvider:BingKey = "Audxd9rehcmI76cwkNYHhCNgkbQxsCmccC0-M4f6oc66VQOxMLhZluCSwi10PSp_".
+        
+        // INSERT YOUR BING MAPS KEY HERE
+        bingProvider:BingKey = "REPLACE_THIS_WITH_YOUR_BING_MAPS_KEY".
+        
+        
         cache = NEW LocalFileCacheProvider(cacheFolder).
         bingProvider:CacheProvider = cache.
         THIS-OBJECT:CustomerAddressMap:Providers:Add(bingProvider).
@@ -362,12 +365,13 @@ CLASS Form1 INHERITS Form:
 
     METHOD PRIVATE VOID telerikButton1_Clicked( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):        
         
-
+        DEFINE VARIABLE oStringGenerator AS SampleStringGenerator NO-UNDO.
         
-
-        /*        MESSAGE "Number of row in the data table:" oCustomersDataTable:Rows:Count*/
-        /*            VIEW-AS ALERT-BOX INFORMATION.                                       */
+        oStringGenerator = NEW SampleStringGenerator().
         
+        MESSAGE oStringGenerator:GetSome()
+            VIEW-AS ALERT-BOX.
+
         RETURN.
     END METHOD.
 
