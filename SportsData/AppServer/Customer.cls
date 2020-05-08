@@ -1,11 +1,11 @@
  
- /*------------------------------------------------------------------------
-    File        : Customer
-    Syntax      : 
-    Author(s)   : nvasilev
-    Created     : Mon Apr 20 12:18:35 EEST 2020
-    Notes       : 
-  ----------------------------------------------------------------------*/
+/*------------------------------------------------------------------------
+   File        : Customer
+   Syntax      : 
+   Author(s)   : nvasilev
+   Created     : Mon Apr 20 12:18:35 EEST 2020
+   Notes       : 
+ ----------------------------------------------------------------------*/
   
 @program FILE(name="Customer.cls", module="AppServer").
 @openapi.openedge.export FILE(type="REST", executionMode="singleton", useReturnValue="false", writeDataSetBeforeImage="false").
@@ -40,18 +40,18 @@ CLASS Customer INHERITS BusinessEntity:
         
         /* Data Source for each table in dataset. Should be in table order as defined 
             in DataSet */     
-         hDataSourceArray[1] =  DATA-SOURCE srcCustomer:HANDLE.
+        hDataSourceArray[1] =  DATA-SOURCE srcCustomer:HANDLE.
          
                   
-         /* Skip-list entry for each table in dataset. Should be in temp-table order 
-           as defined in DataSet */
+        /* Skip-list entry for each table in dataset. Should be in temp-table order 
+          as defined in DataSet */
         /* Each skip-list entry is a comma-separated list of field names, to be
             ignored in create stmt */
              
-         cSkipListArray[1] = "".
+        cSkipListArray[1] = "".
          
          
-         THIS-OBJECT:ProDataSource = hDataSourceArray.
+        THIS-OBJECT:ProDataSource = hDataSourceArray.
         THIS-OBJECT:SkipList = cSkipListArray.
                  
     END CONSTRUCTOR.
@@ -63,8 +63,8 @@ CLASS Customer INHERITS BusinessEntity:
     @openapi.openedge.export(type="REST", useReturnValue="false", writeDataSetBeforeImage="true").
     @progress.service.resourceMapping(type="REST", operation="read", URI="?filter=~{filter~}", alias="", mediaType="application/json"). 
     METHOD PUBLIC VOID ReadCustomer(
-            INPUT filter AS CHARACTER, 
-            OUTPUT DATASET dsCustomer):
+        INPUT filter AS CHARACTER, 
+        OUTPUT DATASET dsCustomer):
         
         SUPER:ReadData(filter).
               
@@ -89,6 +89,10 @@ CLASS Customer INHERITS BusinessEntity:
     @progress.service.resourceMapping(type="REST", operation="update", URI="", alias="", mediaType="application/json").
     METHOD PUBLIC VOID UpdateCustomer(INPUT-OUTPUT DATASET dsCustomer):            
     
+        FOR EACH ttCustomer:
+            ttCustomer.Comments = "Updated by server on: " + string(NOW).
+        END.
+        
         SUPER:UpdateData(DATASET dsCustomer BY-REFERENCE).          
     END METHOD.
     
