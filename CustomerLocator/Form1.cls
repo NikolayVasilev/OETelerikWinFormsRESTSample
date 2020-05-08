@@ -34,9 +34,11 @@ CLASS Form1 INHERITS Form:
     DEFINE PRIVATE VARIABLE CustomerPropertyGrid AS Telerik.WinControls.UI.RadPropertyGrid NO-UNDO.
     DEFINE PRIVATE VARIABLE CustomersGridView AS Telerik.WinControls.UI.RadGridView NO-UNDO.
     DEFINE PRIVATE VARIABLE fluentDarkTheme1 AS Telerik.WinControls.Themes.FluentDarkTheme NO-UNDO.
+    DEFINE PRIVATE VARIABLE getCustomersButton AS Telerik.WinControls.UI.RadButton NO-UNDO.
     DEFINE PRIVATE VARIABLE office2013DarkTheme1 AS Telerik.WinControls.Themes.Office2013DarkTheme NO-UNDO.
+    DEFINE PRIVATE VARIABLE radButton1 AS Telerik.WinControls.UI.RadButton NO-UNDO.
+    DEFINE PRIVATE VARIABLE SaveButton AS Telerik.WinControls.UI.RadButton NO-UNDO.
     DEFINE PRIVATE VARIABLE textBox1 AS System.Windows.Forms.TextBox NO-UNDO.
-    DEFINE PRIVATE VARIABLE telerikButton1 AS RadButton NO-UNDO.
     DEFINE VARIABLE oViewModel AS CustomerWindowViewModel NO-UNDO.
 		
     CONSTRUCTOR PUBLIC Form1 (  ):
@@ -96,17 +98,21 @@ CLASS Form1 INHERITS Form:
         DEFINE VARIABLE tableViewDefinition1 AS Telerik.WinControls.UI.TableViewDefinition NO-UNDO.
         tableViewDefinition1 = NEW Telerik.WinControls.UI.TableViewDefinition().
         THIS-OBJECT:textBox1 = NEW System.Windows.Forms.TextBox().
-        THIS-OBJECT:telerikButton1 = NEW Telerik.WinControls.UI.RadButton().
+        THIS-OBJECT:getCustomersButton = NEW Telerik.WinControls.UI.RadButton().
         THIS-OBJECT:office2013DarkTheme1 = NEW Telerik.WinControls.Themes.Office2013DarkTheme().
         THIS-OBJECT:CustomersGridView = NEW Telerik.WinControls.UI.RadGridView().
         THIS-OBJECT:fluentDarkTheme1 = NEW Telerik.WinControls.Themes.FluentDarkTheme().
         THIS-OBJECT:CustomerAddressMap = NEW Telerik.WinControls.UI.RadMap().
         THIS-OBJECT:CustomerPropertyGrid = NEW Telerik.WinControls.UI.RadPropertyGrid().
-        CAST(THIS-OBJECT:telerikButton1, System.ComponentModel.ISupportInitialize):BeginInit().
+        THIS-OBJECT:SaveButton = NEW Telerik.WinControls.UI.RadButton().
+        THIS-OBJECT:radButton1 = NEW Telerik.WinControls.UI.RadButton().
+        CAST(THIS-OBJECT:getCustomersButton, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomersGridView, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomersGridView:MasterTemplate, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomerAddressMap, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomerPropertyGrid, System.ComponentModel.ISupportInitialize):BeginInit().
+        CAST(THIS-OBJECT:SaveButton, System.ComponentModel.ISupportInitialize):BeginInit().
+        CAST(THIS-OBJECT:radButton1, System.ComponentModel.ISupportInitialize):BeginInit().
         THIS-OBJECT:SuspendLayout().
         /*  */
         /* textBox1 */
@@ -117,15 +123,15 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:textBox1:TabIndex = 0.
         THIS-OBJECT:textBox1:TextChanged:Subscribe(THIS-OBJECT:textBox1_TextChanged).
         /*  */
-        /* telerikButton1 */
+        /* getCustomersButton */
         /*  */
-        THIS-OBJECT:telerikButton1:Location = NEW System.Drawing.Point(12, 50).
-        THIS-OBJECT:telerikButton1:Name = "telerikButton1".
-        THIS-OBJECT:telerikButton1:Size = NEW System.Drawing.Size(100, 20).
-        THIS-OBJECT:telerikButton1:TabIndex = 1.
-        THIS-OBJECT:telerikButton1:Text = "GetCustomers".
-        THIS-OBJECT:telerikButton1:ThemeName = "FluentDark".
-        THIS-OBJECT:telerikButton1:Click:Subscribe(THIS-OBJECT:telerikButton1_Clicked).
+        THIS-OBJECT:getCustomersButton:Location = NEW System.Drawing.Point(12, 50).
+        THIS-OBJECT:getCustomersButton:Name = "getCustomersButton".
+        THIS-OBJECT:getCustomersButton:Size = NEW System.Drawing.Size(100, 20).
+        THIS-OBJECT:getCustomersButton:TabIndex = 1.
+        THIS-OBJECT:getCustomersButton:Text = "GetCustomers".
+        THIS-OBJECT:getCustomersButton:ThemeName = "FluentDark".
+        THIS-OBJECT:getCustomersButton:Click:Subscribe(THIS-OBJECT:telerikButton1_Clicked).
         /*  */
         /* CustomersGridView */
         /*  */
@@ -159,27 +165,51 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:CustomerPropertyGrid:ItemIndent = 28.
         THIS-OBJECT:CustomerPropertyGrid:Location = NEW System.Drawing.Point(118, 344).
         THIS-OBJECT:CustomerPropertyGrid:Name = "CustomerPropertyGrid".
-        THIS-OBJECT:CustomerPropertyGrid:Size = NEW System.Drawing.Size(361, 352).
+        THIS-OBJECT:CustomerPropertyGrid:Size = NEW System.Drawing.Size(361, 313).
         THIS-OBJECT:CustomerPropertyGrid:TabIndex = 5.
         THIS-OBJECT:CustomerPropertyGrid:ThemeName = "FluentDark".
+        /*  */
+        /* SaveButton */
+        /*  */
+        THIS-OBJECT:SaveButton:Location = NEW System.Drawing.Point(118, 664).
+        THIS-OBJECT:SaveButton:Name = "SaveButton".
+        THIS-OBJECT:SaveButton:Size = NEW System.Drawing.Size(361, 32).
+        THIS-OBJECT:SaveButton:TabIndex = 6.
+        THIS-OBJECT:SaveButton:Text = "Save Customer".
+        THIS-OBJECT:SaveButton:ThemeName = "FluentDark".
+        THIS-OBJECT:SaveButton:Click:Subscribe(THIS-OBJECT:SaveButton_Click).
+        /*  */
+        /* radButton1 */
+        /*  */
+        THIS-OBJECT:radButton1:Location = NEW System.Drawing.Point(13, 77).
+        THIS-OBJECT:radButton1:Name = "radButton1".
+        THIS-OBJECT:radButton1:Size = NEW System.Drawing.Size(99, 24).
+        THIS-OBJECT:radButton1:TabIndex = 7.
+        THIS-OBJECT:radButton1:Text = "CheckReferences".
+        THIS-OBJECT:radButton1:ThemeName = "FluentDark".
+        THIS-OBJECT:radButton1:Click:Subscribe(THIS-OBJECT:radButton1_Click).
         /*  */
         /* Form1 */
         /*  */
         THIS-OBJECT:BackColor = System.Drawing.Color:DimGray.
         THIS-OBJECT:ClientSize = NEW System.Drawing.Size(1158, 708).
+        THIS-OBJECT:Controls:Add(THIS-OBJECT:radButton1).
+        THIS-OBJECT:Controls:Add(THIS-OBJECT:SaveButton).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomerPropertyGrid).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomerAddressMap).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomersGridView).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:textBox1).
-        THIS-OBJECT:Controls:Add(THIS-OBJECT:telerikButton1).
+        THIS-OBJECT:Controls:Add(THIS-OBJECT:getCustomersButton).
         THIS-OBJECT:Name = "Form1".
         THIS-OBJECT:Text = "CustomerLocator".
         THIS-OBJECT:Load:Subscribe(THIS-OBJECT:Form1_Load).
-        CAST(THIS-OBJECT:telerikButton1, System.ComponentModel.ISupportInitialize):EndInit().
+        CAST(THIS-OBJECT:getCustomersButton, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomersGridView:MasterTemplate, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomersGridView, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomerAddressMap, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:CustomerPropertyGrid, System.ComponentModel.ISupportInitialize):EndInit().
+        CAST(THIS-OBJECT:SaveButton, System.ComponentModel.ISupportInitialize):EndInit().
+        CAST(THIS-OBJECT:radButton1, System.ComponentModel.ISupportInitialize):EndInit().
         THIS-OBJECT:ResumeLayout(FALSE).
         THIS-OBJECT:PerformLayout().
         CATCH e AS Progress.Lang.Error:
@@ -235,6 +265,33 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:CustomersGridView:MasterTemplate:Columns:Add(textBoxColumn).
     END.
     
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+    @VisualDesigner.
+    METHOD PRIVATE VOID radButton1_Click( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
+        DEFINE VARIABLE oStringGenerator AS SampleStringGenerator NO-UNDO.
+        
+        oStringGenerator = NEW SampleStringGenerator().
+        
+        MESSAGE oStringGenerator:GetSome()
+            VIEW-AS ALERT-BOX.
+        RETURN.
+
+    END METHOD.
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+    @VisualDesigner.
+    METHOD PRIVATE VOID SaveButton_Click( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
+        THIS-OBJECT:oViewModel:SaveSelectedCustomer().
+        RETURN.
+
+    END METHOD.
+
     METHOD PRIVATE VOID SetCustomerLocation():
         DEFINE VARIABLE mapRequest AS Telerik.WinControls.UI.Map.Bing.SearchRequest NO-UNDO.
         DEFINE VARIABLE bingProvider AS BingRestMapProvider NO-UNDO.
@@ -365,12 +422,8 @@ CLASS Form1 INHERITS Form:
 
     METHOD PRIVATE VOID telerikButton1_Clicked( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):        
         
-        DEFINE VARIABLE oStringGenerator AS SampleStringGenerator NO-UNDO.
-        
-        oStringGenerator = NEW SampleStringGenerator().
-        
-        MESSAGE oStringGenerator:GetSome()
-            VIEW-AS ALERT-BOX.
+        THIS-OBJECT:oViewModel:RefreshCustomers().
+        THIS-OBJECT:CustomersGridView:DataSource = THIS-OBJECT:oViewModel:CustomersDataTable.
 
         RETURN.
     END METHOD.

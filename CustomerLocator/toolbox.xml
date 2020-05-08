@@ -64,6 +64,7 @@
   <ControlGroup Text="Telerik" Remove="True">
     <Control Text="FluentDarkTheme" Type="Telerik.WinControls.Themes.FluentDarkTheme" Assembly="Telerik.WinControls.Themes.FluentDark, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e" />
     <Control Text="Office2013DarkTheme" Type="Telerik.WinControls.Themes.Office2013DarkTheme" Assembly="Telerik.WinControls.Themes.Office2013Dark, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e" />
+    <Control Text="RadButton" Type="Telerik.WinControls.UI.RadButton" Assembly="Telerik.WinControls.UI, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e" />
     <Control Text="RadGridView" Type="Telerik.WinControls.UI.RadGridView" Assembly="Telerik.WinControls.GridView, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e" />
     <Control Text="RadMap" Type="Telerik.WinControls.UI.RadMap" Assembly="Telerik.WinControls.RadMap, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e" />
     <Control Text="RadPropertyGrid" Type="Telerik.WinControls.UI.RadPropertyGrid" Assembly="Telerik.WinControls.UI, Version=2020.1.218.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e" />

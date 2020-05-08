@@ -101,6 +101,62 @@ CLASS Service.ServiceClient:
         
         
         
+    END METHOD.   
+    
+    METHOD PRIVATE JsonObject PutResourceObject(resource AS CHARACTER, payload AS JsonObject):
+        DEFINE VARIABLE oClient      AS IHttpClient   NO-UNDO.
+        DEFINE VARIABLE oJson        AS JsonObject    NO-UNDO.
+        DEFINE VARIABLE oRequest     AS IHttpRequest  NO-UNDO.
+        DEFINE VARIABLE oResponse    AS IHttpResponse NO-UNDO.
+        DEFINE VARIABLE oURI         AS URI           NO-UNDO.
+        
+        
+        ASSIGN oClient = ClientBuilder:Build():Client
+            oUri = NEW URI("http", "localhost", 8810)
+            oUri:Path = THIS-OBJECT:baseServiceUrl + resource.
+
+        oRequest = RequestBuilder:Put(oUri, payload):Request.
+
+        oResponse = oClient:Execute(oRequest).
+
+        IF oResponse:StatusCode = 200 THEN // Request succeeded.
+        DO:
+            IF TYPE-OF(oResponse:Entity, JsonObject) THEN
+            DO:
+                oJson = CAST(oResponse:Entity, JsonObject). // use this with dataset
+                // oJson:WriteFile("xxx.json").
+
+            END.
+            ELSE DO:
+                UNDO, THROW NEW AppError(SUBSTITUTE("Unknown response type. Content-Type: &1 Entity Class: &2",
+                    oResponse:ContentType,
+                    oResponse:Entity:GetClass():TypeName), 1).
+            END.
+        END. 
+        ELSE DO: // Got an error status code
+            UNDO, THROW NEW AppError(SUBSTITUTE("Request failed. StatusCode: &1 StatusReason: &2",
+                oResponse:StatusCode,
+                oResponse:StatusReason), 2).
+        END.
+
+        /*        MESSAGE "Done"                    */
+        /*            VIEW-AS ALERT-BOX INFORMATION.*/
+
+        RETURN oJson.
+
+        CATCH e AS Progress.Lang.Error :
+            MESSAGE e:GetMessage(1) e:CallStack
+                VIEW-AS ALERT-BOX ERROR TITLE "HTTP Request Error".
+        END CATCH.
+
+        FINALLY:
+            DELETE OBJECT oClient   NO-ERROR.
+            DELETE OBJECT oRequest  NO-ERROR.
+            DELETE OBJECT oResponse NO-ERROR.
+        END FINALLY.
+        
+        
+        
     END METHOD.    
     
     //METHOD PUBLIC DataTable GetCustomers(OUTPUT DATASET dsCustomer):
@@ -135,6 +191,32 @@ CLASS Service.ServiceClient:
         END. 
         
         RETURN ?.
+        
+    END METHOD.
+    
+    METHOD PUBLIC VOID SaveCustomer(dataRow AS DataRowView):
+        DEFINE VARIABLE vCustNum            AS INTEGER          NO-UNDO.
+        DEFINE VARIABLE oJsonResponse       AS JsonObject       NO-UNDO.
+        DEFINE VARIABLE oJsonPayload        AS JsonObject       NO-UNDO.
+        
+        vCustNum = dataRow["CustNum"].
+        
+        ASSIGN oJsonResponse = THIS-OBJECT:GetResourceObject("Customer?filter=CustNum=" + STRING(vCustNum)).
+        DATASET dsCustomer:READ-JSON("JSONObject", oJsonResponse, "EMPTY").
+        
+        FOR FIRST ttCustomer WHERE ttCustomer.CustNum = vCustNum:
+            ASSIGN
+                ttCustomer.Name = dataRow["Name"].
+        END.
+        
+        /*        hDsCustomer = DATASET dsCustomer:HANDLE.           */
+        /*                                                           */
+        /*        hDsCustomer:WRITE-JSON("JSONObject", oJsonPayload).*/
+        
+        oJsonPayload = NEW JsonObject().
+        oJsonPayload:Read(DATASET dsCustomer:HANDLE).
+        
+        ASSIGN oJsonResponse = THIS-OBJECT:PutResourceObject("Customer", oJsonPayload).
         
     END METHOD.
 
