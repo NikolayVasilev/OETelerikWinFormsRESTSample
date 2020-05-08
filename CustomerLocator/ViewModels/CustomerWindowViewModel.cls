@@ -44,7 +44,7 @@ CLASS ViewModels.CustomerWindowViewModel:
                 END.
                 
                 address = address + 
-                        STRING(THIS-OBJECT:SelectedDataRow["Country"]).
+                    STRING(THIS-OBJECT:SelectedDataRow["Country"]).
             END.
             
             RETURN address.
@@ -69,6 +69,11 @@ CLASS ViewModels.CustomerWindowViewModel:
       
         ASSIGN THIS-OBJECT:CustomersDataTable = THIS-OBJECT:oSportsDataServiceClient:GetCustomers().
   
+    END METHOD.
+    
+    METHOD PUBLIC VOID SaveSelectedCustomer():
+      THIS-OBJECT:oSportsDataServiceClient:SaveCustomer(THIS-OBJECT:SelectedDataRow).
+        
     END METHOD.
 
 END CLASS.
