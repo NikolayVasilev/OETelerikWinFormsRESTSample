@@ -89,8 +89,10 @@ CLASS Customer INHERITS BusinessEntity:
     @progress.service.resourceMapping(type="REST", operation="update", URI="", alias="", mediaType="application/json").
     METHOD PUBLIC VOID UpdateCustomer(INPUT-OUTPUT DATASET dsCustomer):            
     
-        FOR EACH ttCustomer:
-            ttCustomer.Comments = "Updated by server on: " + string(NOW).
+        IF AVAILABLE(ttCustomer) THEN DO:
+            FOR EACH ttCustomer:
+                ttCustomer.Comments = "Updated by server on: " + string(NOW).
+            END.
         END.
         
         SUPER:UpdateData(DATASET dsCustomer BY-REFERENCE).          

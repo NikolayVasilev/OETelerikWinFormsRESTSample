@@ -37,6 +37,7 @@ CLASS Form1 INHERITS Form:
     DEFINE PRIVATE VARIABLE getCustomersButton AS Telerik.WinControls.UI.RadButton NO-UNDO.
     DEFINE PRIVATE VARIABLE office2013DarkTheme1 AS Telerik.WinControls.Themes.Office2013DarkTheme NO-UNDO.
     DEFINE PRIVATE VARIABLE radButton1 AS Telerik.WinControls.UI.RadButton NO-UNDO.
+    DEFINE PRIVATE VARIABLE radButton2 AS Telerik.WinControls.UI.RadButton NO-UNDO.
     DEFINE PRIVATE VARIABLE SaveButton AS Telerik.WinControls.UI.RadButton NO-UNDO.
     DEFINE PRIVATE VARIABLE textBox1 AS System.Windows.Forms.TextBox NO-UNDO.
     DEFINE VARIABLE oViewModel AS CustomerWindowViewModel NO-UNDO.
@@ -106,6 +107,7 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:CustomerPropertyGrid = NEW Telerik.WinControls.UI.RadPropertyGrid().
         THIS-OBJECT:SaveButton = NEW Telerik.WinControls.UI.RadButton().
         THIS-OBJECT:radButton1 = NEW Telerik.WinControls.UI.RadButton().
+        THIS-OBJECT:radButton2 = NEW Telerik.WinControls.UI.RadButton().
         CAST(THIS-OBJECT:getCustomersButton, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomersGridView, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:CustomersGridView:MasterTemplate, System.ComponentModel.ISupportInitialize):BeginInit().
@@ -113,6 +115,7 @@ CLASS Form1 INHERITS Form:
         CAST(THIS-OBJECT:CustomerPropertyGrid, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:SaveButton, System.ComponentModel.ISupportInitialize):BeginInit().
         CAST(THIS-OBJECT:radButton1, System.ComponentModel.ISupportInitialize):BeginInit().
+        CAST(THIS-OBJECT:radButton2, System.ComponentModel.ISupportInitialize):BeginInit().
         THIS-OBJECT:SuspendLayout().
         /*  */
         /* textBox1 */
@@ -189,10 +192,20 @@ CLASS Form1 INHERITS Form:
         THIS-OBJECT:radButton1:ThemeName = "FluentDark".
         THIS-OBJECT:radButton1:Click:Subscribe(THIS-OBJECT:radButton1_Click).
         /*  */
+        /* radButton2 */
+        /*  */
+        THIS-OBJECT:radButton2:Location = NEW System.Drawing.Point(13, 107).
+        THIS-OBJECT:radButton2:Name = "radButton2".
+        THIS-OBJECT:radButton2:Size = NEW System.Drawing.Size(99, 24).
+        THIS-OBJECT:radButton2:TabIndex = 8.
+        THIS-OBJECT:radButton2:Text = "radButton2".
+        THIS-OBJECT:radButton2:ThemeName = "FluentDark".
+        /*  */
         /* Form1 */
         /*  */
         THIS-OBJECT:BackColor = System.Drawing.Color:DimGray.
         THIS-OBJECT:ClientSize = NEW System.Drawing.Size(1158, 708).
+        THIS-OBJECT:Controls:Add(THIS-OBJECT:radButton2).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:radButton1).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:SaveButton).
         THIS-OBJECT:Controls:Add(THIS-OBJECT:CustomerPropertyGrid).
@@ -210,6 +223,7 @@ CLASS Form1 INHERITS Form:
         CAST(THIS-OBJECT:CustomerPropertyGrid, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:SaveButton, System.ComponentModel.ISupportInitialize):EndInit().
         CAST(THIS-OBJECT:radButton1, System.ComponentModel.ISupportInitialize):EndInit().
+        CAST(THIS-OBJECT:radButton2, System.ComponentModel.ISupportInitialize):EndInit().
         THIS-OBJECT:ResumeLayout(FALSE).
         THIS-OBJECT:PerformLayout().
         CATCH e AS Progress.Lang.Error:
