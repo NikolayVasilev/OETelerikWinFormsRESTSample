@@ -302,118 +302,61 @@
         }},
         "dsItem": {"ttItem": {
             "trackChanges": true,
-            "indexes": {
-                "CatDescription": {
-                    "primary": false,
-                    "unique": false,
-                    "word": false,
-                    "fields": ["CatDescription:asc"]
-                },
-                "Category2ItemName": {
-                    "primary": false,
-                    "unique": false,
-                    "word": false,
-                    "fields": [
-                        "Category2:asc",
-                        "ItemName:asc"
-                    ]
-                },
-                "CategoryItemName": {
-                    "primary": false,
-                    "unique": false,
-                    "word": false,
-                    "fields": [
-                        "Category1:asc",
-                        "ItemName:asc"
-                    ]
-                },
-                "ItemName": {
-                    "primary": false,
-                    "unique": false,
-                    "word": false,
-                    "fields": ["ItemName:asc"]
-                },
-                "ItemNum": {
-                    "primary": true,
-                    "unique": true,
-                    "word": false,
-                    "fields": ["ItemNum:asc"]
-                }
-            },
+            "indexes": {"id": {
+                "primary": true,
+                "unique": true,
+                "word": false,
+                "fields": ["id:desc"]
+            }},
             "fields": [
                 {
-                    "name": "ItemNum",
+                    "name": "id",
                     "ablType": "INTEGER",
                     "extent": null
                 },
                 {
-                    "name": "ItemName",
+                    "name": "itemNum",
+                    "ablType": "INTEGER",
+                    "extent": null
+                },
+                {
+                    "name": "name",
                     "ablType": "CHARACTER",
                     "extent": null
                 },
                 {
-                    "name": "Price",
+                    "name": "price",
                     "ablType": "DECIMAL",
                     "extent": null
                 },
                 {
-                    "name": "OnHand",
-                    "ablType": "INTEGER",
-                    "extent": null
-                },
-                {
-                    "name": "Allocated",
-                    "ablType": "INTEGER",
-                    "extent": null
-                },
-                {
-                    "name": "ReOrder",
-                    "ablType": "INTEGER",
-                    "extent": null
-                },
-                {
-                    "name": "OnOrder",
-                    "ablType": "INTEGER",
-                    "extent": null
-                },
-                {
-                    "name": "CatPage",
-                    "ablType": "INTEGER",
-                    "extent": null
-                },
-                {
-                    "name": "CatDescription",
+                    "name": "image",
                     "ablType": "CHARACTER",
                     "extent": null
                 },
                 {
-                    "name": "Category1",
+                    "name": "category",
                     "ablType": "CHARACTER",
                     "extent": null
                 },
                 {
-                    "name": "Category2",
+                    "name": "description",
                     "ablType": "CHARACTER",
                     "extent": null
                 },
                 {
-                    "name": "Special",
-                    "ablType": "CHARACTER",
+                    "name": "featured",
+                    "ablType": "LOGICAL",
                     "extent": null
                 },
                 {
-                    "name": "Weight",
+                    "name": "onHand",
+                    "ablType": "INTEGER",
+                    "extent": null
+                },
+                {
+                    "name": "weight",
                     "ablType": "DECIMAL",
-                    "extent": null
-                },
-                {
-                    "name": "MinQty",
-                    "ablType": "INTEGER",
-                    "extent": null
-                },
-                {
-                    "name": "ItemImage",
-                    "ablType": "BLOB",
                     "extent": null
                 }
             ]

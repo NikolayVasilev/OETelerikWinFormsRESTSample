@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<module-content version="12.2">
+    <module id="e90b649b-c5a4-4607-86cd-e369e3482328" name="SportsKendo">
+        <resource path="AppServer" publish="true"/>
+    </module>
+</module-content>

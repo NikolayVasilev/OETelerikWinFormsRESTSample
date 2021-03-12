@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prgs:model xmlns:prgs="http://www.progress.com/caf/camel/component/prgrs" id="resourceModel">
+  <prgs:resource consumes="application/json" name="Item" path="/Item" produces="application/json">
+    <prgs:operation consumes="application/json" idls="SportsKendo/.services/AppServer/Item.pidl::com.progress.openedge.pdt.bpmbindings" name="Item..DeleteItem" path="" produces="application/json" verb="DELETE"/>
+    <prgs:operation consumes="application/json" idls="SportsKendo/.services/AppServer/Item.pidl::com.progress.openedge.pdt.bpmbindings" name="Item..UpdateItem" path="" produces="application/json" verb="PUT"/>
+    <prgs:operation consumes="application/json" idls="SportsKendo/.services/AppServer/Item.pidl::com.progress.openedge.pdt.bpmbindings" name="Item..CreateItem" path="" produces="application/json" verb="POST"/>
+    <prgs:operation consumes="application/json" idls="SportsKendo/.services/AppServer/Item.pidl::com.progress.openedge.pdt.bpmbindings" name="Item..ReadItem" path="" produces="application/json" verb="GET">
+      <prgs:param name="filter" type="QUERY"/>
+    </prgs:operation>
+  </prgs:resource>
+  <prgs:resource consumes="application/json" name="Customer" path="/Customer" produces="application/json">
+    <prgs:operation consumes="application/json" idls="SportsKendo/.services/AppServer/Customer.pidl::com.progress.openedge.pdt.bpmbindings" name="Customer..UpdateCustomer" path="" produces="application/json" verb="PUT"/>
+    <prgs:operation consumes="application/json" idls="SportsKendo/.services/AppServer/Customer.pidl::com.progress.openedge.pdt.bpmbindings" name="Customer..DeleteCustomer" path="" produces="application/json" verb="DELETE"/>
+    <prgs:operation consumes="application/json" idls="SportsKendo/.services/AppServer/Customer.pidl::com.progress.openedge.pdt.bpmbindings" name="Customer..ReadCustomer" path="" produces="application/json" verb="GET">
+      <prgs:param name="filter" type="QUERY"/>
+    </prgs:operation>
+    <prgs:operation consumes="application/json" idls="SportsKendo/.services/AppServer/Customer.pidl::com.progress.openedge.pdt.bpmbindings" name="Customer..CreateCustomer" path="" produces="application/json" verb="POST"/>
+  </prgs:resource>
+</prgs:model>

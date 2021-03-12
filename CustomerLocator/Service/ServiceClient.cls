@@ -9,24 +9,24 @@
    Notes       : 
  ----------------------------------------------------------------------*/
 
-USING Progress.Lang.*.
-USING OpenEdge.Core.WidgetHandle FROM PROPATH.
-USING OpenEdge.Net.HTTP.ClientBuilder FROM PROPATH.
-USING OpenEdge.Net.HTTP.Credentials FROM PROPATH.
-USING OpenEdge.Net.HTTP.IHttpClient FROM PROPATH.
-USING OpenEdge.Net.HTTP.IHttpRequest FROM PROPATH.
-USING OpenEdge.Net.HTTP.IHttpResponse FROM PROPATH.
-USING OpenEdge.Net.HTTP.RequestBuilder FROM PROPATH.
-USING OpenEdge.Net.URI FROM PROPATH.
-USING Progress.Json.ObjectModel.JsonObject FROM PROPATH.
-USING Progress.Lang.AppError FROM PROPATH.
-USING System.Data.* FROM ASSEMBLY.
-USING Utils.TempTableToDataTableConverter FROM PROPATH.
+using Progress.Lang.*.
+using OpenEdge.Core.WidgetHandle from propath.
+using OpenEdge.Net.HTTP.ClientBuilder from propath.
+using OpenEdge.Net.HTTP.Credentials from propath.
+using OpenEdge.Net.HTTP.IHttpClient from propath.
+using OpenEdge.Net.HTTP.IHttpRequest from propath.
+using OpenEdge.Net.HTTP.IHttpResponse from propath.
+using OpenEdge.Net.HTTP.RequestBuilder from propath.
+using OpenEdge.Net.URI from propath.
+using Progress.Json.ObjectModel.JsonObject from propath.
+using Progress.Lang.AppError from propath.
+using System.Data.* from assembly.
+using Utils.TempTableToDataTableConverter from propath.
 
 
-BLOCK-LEVEL ON ERROR UNDO, THROW.
+block-level on error undo, throw.
 
-CLASS Service.ServiceClient: 
+class Service.ServiceClient: 
 
     /*------------------------------------------------------------------------------
      Purpose:
@@ -34,190 +34,191 @@ CLASS Service.ServiceClient:
     ------------------------------------------------------------------------------*/
     
     {Entities/customer.i}
-    DEFINE PRIVATE VARIABLE baseServiceUrl AS CHARACTER NO-UNDO.
+    define private variable baseServiceUrl as character no-undo.
 
     
-    CONSTRUCTOR PUBLIC ServiceClient ( serviceBase AS CHARACTER ):
-        SUPER ().
+    constructor public ServiceClient ( serviceBase as character ):
+        super ().
         
         
-        IF serviceBase = "Production" THEN DO:
-            ASSIGN THIS-OBJECT:baseServiceUrl = "/SportsData/web/pdo/SportsDataService/".
-        END.
+        if serviceBase = "Production" then do:
+            assign this-object:baseServiceUrl = "/SportsData/web/pdo/SportsDataService/".
+            //assign this-object:baseServiceUrl = "/SportsKendo/rest/SportsKendoService/".
+        end.
         
-    END CONSTRUCTOR.
+    end constructor.
     
-    METHOD PRIVATE JsonObject GetResourceObject(resource AS CHARACTER):
-        DEFINE VARIABLE oClient      AS IHttpClient   NO-UNDO.
-        DEFINE VARIABLE oJson        AS JsonObject    NO-UNDO.
-        DEFINE VARIABLE oRequest     AS IHttpRequest  NO-UNDO.
-        DEFINE VARIABLE oResponse    AS IHttpResponse NO-UNDO.
-        DEFINE VARIABLE oURI         AS URI           NO-UNDO.
+    method private JsonObject GetResourceObject(resource as character):
+        define variable oClient      as IHttpClient   no-undo.
+        define variable oJson        as JsonObject    no-undo.
+        define variable oRequest     as IHttpRequest  no-undo.
+        define variable oResponse    as IHttpResponse no-undo.
+        define variable oURI         as URI           no-undo.
         
         
-        ASSIGN oClient = ClientBuilder:Build():Client
-            oUri = NEW URI("http", "localhost", 8810)
-            oUri:Path = THIS-OBJECT:baseServiceUrl + resource.
+        assign oClient = ClientBuilder:Build():Client
+            oUri = new URI("http", "localhost", 8810)
+            oUri:Path = this-object:baseServiceUrl + resource.
 
         oRequest = RequestBuilder:Get(oUri):Request.
 
         oResponse = oClient:Execute(oRequest).
 
-        IF oResponse:StatusCode = 200 THEN // Request succeeded.
-        DO:
-            IF TYPE-OF(oResponse:Entity, JsonObject) THEN
-            DO:
-                oJson = CAST(oResponse:Entity, JsonObject). // use this with dataset
+        if oResponse:StatusCode = 200 then // Request succeeded.
+        do:
+            if type-of(oResponse:Entity, JsonObject) then
+            do:
+                oJson = cast(oResponse:Entity, JsonObject). // use this with dataset
                 // oJson:WriteFile("xxx.json").
 
-            END.
-            ELSE DO:
-                UNDO, THROW NEW AppError(SUBSTITUTE("Unknown response type. Content-Type: &1 Entity Class: &2",
+            end.
+            else do:
+                undo, throw new AppError(substitute("Unknown response type. Content-Type: &1 Entity Class: &2",
                     oResponse:ContentType,
                     oResponse:Entity:GetClass():TypeName), 1).
-            END.
-        END. 
-        ELSE DO: // Got an error status code
-            UNDO, THROW NEW AppError(SUBSTITUTE("Request failed. StatusCode: &1 StatusReason: &2",
+            end.
+        end. 
+        else do: // Got an error status code
+            undo, throw new AppError(substitute("Request failed. StatusCode: &1 StatusReason: &2",
                 oResponse:StatusCode,
                 oResponse:StatusReason), 2).
-        END.
+        end.
 
         /*        MESSAGE "Done"                    */
         /*            VIEW-AS ALERT-BOX INFORMATION.*/
 
-        RETURN oJson.
+        return oJson.
 
-        CATCH e AS Progress.Lang.Error :
-            MESSAGE e:GetMessage(1) e:CallStack
-                VIEW-AS ALERT-BOX ERROR TITLE "HTTP Request Error".
-        END CATCH.
+        catch e as Progress.Lang.Error :
+            message e:GetMessage(1) e:CallStack
+                view-as alert-box error title "HTTP Request Error".
+        end catch.
 
-        FINALLY:
-            DELETE OBJECT oClient   NO-ERROR.
-            DELETE OBJECT oRequest  NO-ERROR.
-            DELETE OBJECT oResponse NO-ERROR.
-        END FINALLY.
+        finally:
+            delete object oClient   no-error.
+            delete object oRequest  no-error.
+            delete object oResponse no-error.
+        end finally.
         
         
         
-    END METHOD.   
+    end method.   
     
-    METHOD PRIVATE JsonObject PutResourceObject(resource AS CHARACTER, payload AS JsonObject):
-        DEFINE VARIABLE oClient      AS IHttpClient   NO-UNDO.
-        DEFINE VARIABLE oJson        AS JsonObject    NO-UNDO.
-        DEFINE VARIABLE oRequest     AS IHttpRequest  NO-UNDO.
-        DEFINE VARIABLE oResponse    AS IHttpResponse NO-UNDO.
-        DEFINE VARIABLE oURI         AS URI           NO-UNDO.
+    method private JsonObject PutResourceObject(resource as character, payload as JsonObject):
+        define variable oClient      as IHttpClient   no-undo.
+        define variable oJson        as JsonObject    no-undo.
+        define variable oRequest     as IHttpRequest  no-undo.
+        define variable oResponse    as IHttpResponse no-undo.
+        define variable oURI         as URI           no-undo.
         
         
-        ASSIGN oClient = ClientBuilder:Build():Client
-            oUri = NEW URI("http", "localhost", 8810)
-            oUri:Path = THIS-OBJECT:baseServiceUrl + resource.
+        assign oClient = ClientBuilder:Build():Client
+            oUri = new URI("http", "localhost", 8810)
+            oUri:Path = this-object:baseServiceUrl + resource.
 
         oRequest = RequestBuilder:Put(oUri, payload):Request.
 
         oResponse = oClient:Execute(oRequest).
 
-        IF oResponse:StatusCode = 200 THEN // Request succeeded.
-        DO:
-            IF TYPE-OF(oResponse:Entity, JsonObject) THEN
-            DO:
-                oJson = CAST(oResponse:Entity, JsonObject). // use this with dataset
+        if oResponse:StatusCode = 200 then // Request succeeded.
+        do:
+            if type-of(oResponse:Entity, JsonObject) then
+            do:
+                oJson = cast(oResponse:Entity, JsonObject). // use this with dataset
                 // oJson:WriteFile("xxx.json").
 
-            END.
-            ELSE DO:
-                UNDO, THROW NEW AppError(SUBSTITUTE("Unknown response type. Content-Type: &1 Entity Class: &2",
+            end.
+            else do:
+                undo, throw new AppError(substitute("Unknown response type. Content-Type: &1 Entity Class: &2",
                     oResponse:ContentType,
                     oResponse:Entity:GetClass():TypeName), 1).
-            END.
-        END. 
-        ELSE DO: // Got an error status code
-            UNDO, THROW NEW AppError(SUBSTITUTE("Request failed. StatusCode: &1 StatusReason: &2",
+            end.
+        end. 
+        else do: // Got an error status code
+            undo, throw new AppError(substitute("Request failed. StatusCode: &1 StatusReason: &2",
                 oResponse:StatusCode,
                 oResponse:StatusReason), 2).
-        END.
+        end.
 
         /*        MESSAGE "Done"                    */
         /*            VIEW-AS ALERT-BOX INFORMATION.*/
 
-        RETURN oJson.
+        return oJson.
 
-        CATCH e AS Progress.Lang.Error :
-            MESSAGE e:GetMessage(1) e:CallStack
-                VIEW-AS ALERT-BOX ERROR TITLE "HTTP Request Error".
-        END CATCH.
+        catch e as Progress.Lang.Error :
+            message e:GetMessage(1) e:CallStack
+                view-as alert-box error title "HTTP Request Error".
+        end catch.
 
-        FINALLY:
-            DELETE OBJECT oClient   NO-ERROR.
-            DELETE OBJECT oRequest  NO-ERROR.
-            DELETE OBJECT oResponse NO-ERROR.
-        END FINALLY.
+        finally:
+            delete object oClient   no-error.
+            delete object oRequest  no-error.
+            delete object oResponse no-error.
+        end finally.
         
         
         
-    END METHOD.    
+    end method.    
     
     //METHOD PUBLIC DataTable GetCustomers(OUTPUT DATASET dsCustomer):
-    METHOD PUBLIC DataTable GetCustomers():
-        DEFINE VARIABLE oJsonResponse AS JsonObject    NO-UNDO.
-        DEFINE VARIABLE oDataTableConverter AS TempTableToDataTableConverter NO-UNDO.
-        DEFINE VARIABLE oCustomersDataTable AS DataTable NO-UNDO.
-        ASSIGN oDataTableConverter = NEW TempTableToDataTableConverter().
+    method public DataTable GetCustomers():
+        define variable oJsonResponse as JsonObject    no-undo.
+        define variable oDataTableConverter as TempTableToDataTableConverter no-undo.
+        define variable oCustomersDataTable as DataTable no-undo.
+        assign oDataTableConverter = new TempTableToDataTableConverter().
         
-        ASSIGN oJsonResponse = THIS-OBJECT:GetResourceObject("Customer").
-        DATASET dsCustomer:READ-JSON("JSONObject", oJsonResponse, "EMPTY").
+        assign oJsonResponse = this-object:GetResourceObject("Customer").
+        dataset dsCustomer:read-json("JSONObject", oJsonResponse, "EMPTY").
         
-        oCustomersDataTable = oDataTableConverter:GetCustomersDataTable(INPUT DATASET dsCustomer BY-REFERENCE).           
+        oCustomersDataTable = oDataTableConverter:GetCustomersDataTable(input DATASET dsCustomer by-reference).           
 
-        RETURN oCustomersDataTable.
+        return oCustomersDataTable.
         
-    END METHOD.
+    end method.
     
-    METHOD PUBLIC DataRow GetCustomerWithId(id AS INTEGER):
-        DEFINE VARIABLE oJsonResponse AS JsonObject    NO-UNDO.
-        DEFINE VARIABLE oDataTableConverter AS TempTableToDataTableConverter NO-UNDO.
-        DEFINE VARIABLE oCustomersDataTable AS DataTable NO-UNDO.
-        ASSIGN oDataTableConverter = NEW TempTableToDataTableConverter().
+    method public DataRow GetCustomerWithId(id as integer):
+        define variable oJsonResponse as JsonObject    no-undo.
+        define variable oDataTableConverter as TempTableToDataTableConverter no-undo.
+        define variable oCustomersDataTable as DataTable no-undo.
+        assign oDataTableConverter = new TempTableToDataTableConverter().
         
-        ASSIGN oJsonResponse = THIS-OBJECT:GetResourceObject("Customer?filter=CustNum=" + STRING(id)).
-        DATASET dsCustomer:READ-JSON("JSONObject", oJsonResponse, "EMPTY").
+        assign oJsonResponse = this-object:GetResourceObject("Customer?filter=CustNum=" + STRING(id)).
+        dataset dsCustomer:read-json("JSONObject", oJsonResponse, "EMPTY").
         
-        oCustomersDataTable = oDataTableConverter:GetCustomersDataTable(INPUT DATASET dsCustomer BY-REFERENCE).           
+        oCustomersDataTable = oDataTableConverter:GetCustomersDataTable(input DATASET dsCustomer by-reference).           
         
-        IF oCustomersDataTable:Rows:Count > 0 THEN DO:
-            RETURN oCustomersDataTable:Rows[0].
-        END. 
+        if oCustomersDataTable:Rows:Count > 0 then do:
+            return oCustomersDataTable:Rows[0].
+        end. 
         
-        RETURN ?.
+        return ?.
         
-    END METHOD.
+    end method.
     
-    METHOD PUBLIC VOID SaveCustomer(dataRow AS DataRowView):
-        DEFINE VARIABLE vCustNum            AS INTEGER          NO-UNDO.
-        DEFINE VARIABLE oJsonResponse       AS JsonObject       NO-UNDO.
-        DEFINE VARIABLE oJsonPayload        AS JsonObject       NO-UNDO.
+    method public void SaveCustomer(dataRow as DataRowView):
+        define variable vCustNum            as integer          no-undo.
+        define variable oJsonResponse       as JsonObject       no-undo.
+        define variable oJsonPayload        as JsonObject       no-undo.
         
         vCustNum = dataRow["CustNum"].
         
-        ASSIGN oJsonResponse = THIS-OBJECT:GetResourceObject("Customer?filter=CustNum=" + STRING(vCustNum)).
-        DATASET dsCustomer:READ-JSON("JSONObject", oJsonResponse, "EMPTY").
+        assign oJsonResponse = this-object:GetResourceObject("Customer?filter=CustNum=" + STRING(vCustNum)).
+        dataset dsCustomer:read-json("JSONObject", oJsonResponse, "EMPTY").
         
-        FOR FIRST ttCustomer WHERE ttCustomer.CustNum = vCustNum:
-            ASSIGN
+        for first ttCustomer where ttCustomer.CustNum = vCustNum:
+            assign
                 ttCustomer.Name = dataRow["Name"].
-        END.
+        end.
         
         /*        hDsCustomer = DATASET dsCustomer:HANDLE.           */
         /*                                                           */
         /*        hDsCustomer:WRITE-JSON("JSONObject", oJsonPayload).*/
         
-        oJsonPayload = NEW JsonObject().
-        oJsonPayload:Read(DATASET dsCustomer:HANDLE).
+        oJsonPayload = new JsonObject().
+        oJsonPayload:Read(dataset dsCustomer:HANDLE).
         
-        ASSIGN oJsonResponse = THIS-OBJECT:PutResourceObject("Customer", oJsonPayload).
+        assign oJsonResponse = this-object:PutResourceObject("Customer", oJsonPayload).
         
-    END METHOD.
+    end method.
 
-END CLASS.
+end class.

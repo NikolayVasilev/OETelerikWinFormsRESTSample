@@ -1,6 +1,6 @@
 {
     "version": "1.4",
-    "lastModified": "Thu Apr 23 09:49:36 EEST 2020",
+    "lastModified": "Tue Dec 01 15:22:06 EET 2020",
     "services": [{
         "name": "SportsDataService",
         "address": "\/web\/pdo\/SportsDataService",
@@ -234,96 +234,65 @@
                                         "type": "string",
                                         "semanticType": "Internal"
                                     },
-                                    "ItemNum": {
+                                    "id": {
                                         "type": "integer",
                                         "ablType": "INTEGER",
                                         "default": 0,
-                                        "title": "Item Num"
+                                        "title": "id"
                                     },
-                                    "ItemName": {
+                                    "itemNum": {
+                                        "type": "integer",
+                                        "ablType": "INTEGER",
+                                        "default": 0,
+                                        "title": "itemNum"
+                                    },
+                                    "name": {
                                         "type": "string",
                                         "ablType": "CHARACTER",
                                         "default": "",
-                                        "title": "Item Name"
+                                        "title": "name"
                                     },
-                                    "Price": {
+                                    "price": {
                                         "type": "number",
                                         "ablType": "DECIMAL",
                                         "default": 0,
-                                        "title": "Price"
+                                        "title": "price"
                                     },
-                                    "OnHand": {
-                                        "type": "integer",
-                                        "ablType": "INTEGER",
-                                        "default": 0,
-                                        "title": "On Hand"
-                                    },
-                                    "Allocated": {
-                                        "type": "integer",
-                                        "ablType": "INTEGER",
-                                        "default": 0,
-                                        "title": "Allocated"
-                                    },
-                                    "ReOrder": {
-                                        "type": "integer",
-                                        "ablType": "INTEGER",
-                                        "default": 0,
-                                        "title": "Re Order"
-                                    },
-                                    "OnOrder": {
-                                        "type": "integer",
-                                        "ablType": "INTEGER",
-                                        "default": 0,
-                                        "title": "On Order"
-                                    },
-                                    "CatPage": {
-                                        "type": "integer",
-                                        "ablType": "INTEGER",
-                                        "default": 0,
-                                        "title": "Cat Page"
-                                    },
-                                    "CatDescription": {
+                                    "image": {
                                         "type": "string",
                                         "ablType": "CHARACTER",
                                         "default": "",
-                                        "title": "Cat-Description"
+                                        "title": "image"
                                     },
-                                    "Category1": {
+                                    "category": {
                                         "type": "string",
                                         "ablType": "CHARACTER",
                                         "default": "",
-                                        "title": "Category1"
+                                        "title": "category"
                                     },
-                                    "Category2": {
+                                    "description": {
                                         "type": "string",
                                         "ablType": "CHARACTER",
                                         "default": "",
-                                        "title": "Category2"
+                                        "title": "description"
                                     },
-                                    "Special": {
-                                        "type": "string",
-                                        "ablType": "CHARACTER",
-                                        "default": "",
-                                        "title": "Special"
+                                    "featured": {
+                                        "type": "boolean",
+                                        "ablType": "LOGICAL",
+                                        "default": true,
+                                        "title": "featured"
                                     },
-                                    "Weight": {
+                                    "onHand": {
+                                        "type": "integer",
+                                        "ablType": "INTEGER",
+                                        "default": 0,
+                                        "title": "onHand"
+                                    },
+                                    "weight": {
                                         "type": "number",
                                         "ablType": "DECIMAL",
                                         "default": 0,
-                                        "title": "Weight"
-                                    },
-                                    "MinQty": {
-                                        "type": "integer",
-                                        "ablType": "INTEGER",
-                                        "default": 0,
-                                        "title": "Min Qty"
-                                    },
-                                    "ItemImage": {
-                                        "type": "string",
-                                        "contentEncoding": "base64",
-                                        "ablType": "BLOB",
-                                        "default": null,
-                                        "title": "ItemImage"
+                                        "title": "weight"
                                     }
                                 }
                             }

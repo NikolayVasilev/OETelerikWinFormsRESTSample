@@ -9,13 +9,13 @@
    Notes       : 
  ----------------------------------------------------------------------*/
 
-USING Progress.Lang.*.
-USING System.Data.* FROM ASSEMBLY.
-USING Service.ServiceClient FROM PROPATH.
+using Progress.Lang.*.
+using System.Data.* from assembly.
+using Service.ServiceClient from propath.
 
-BLOCK-LEVEL ON ERROR UNDO, THROW.
+block-level on error undo, throw.
 
-CLASS ViewModels.CustomerWindowViewModel: 
+class ViewModels.CustomerWindowViewModel: 
 
     /*------------------------------------------------------------------------------
      Purpose:
@@ -23,57 +23,57 @@ CLASS ViewModels.CustomerWindowViewModel:
     ------------------------------------------------------------------------------*/
     
     
-    DEFINE VARIABLE oSportsDataServiceClient AS Service.ServiceClient NO-UNDO.
+    define variable oSportsDataServiceClient as Service.ServiceClient no-undo.
     
-    DEFINE PUBLIC PROPERTY CustomerAddress AS CHARACTER NO-UNDO 
-        GET:
-            DEFINE VARIABLE address AS CHARACTER NO-UNDO.
+    define public property CustomerAddress as character no-undo 
+        get:
+            define variable address as character no-undo.
             
-            IF THIS-OBJECT:SelectedDataRow NE ? THEN DO:
-                address = STRING(THIS-OBJECT:SelectedDataRow["City"]) + 
+            if this-object:SelectedDataRow ne ? then do:
+                address = string(this-object:SelectedDataRow["City"]) + 
                     ", " + 
-                    STRING(THIS-OBJECT:SelectedDataRow["Address"]) + 
+                    STRING(this-object:SelectedDataRow["Address"]) + 
                     " " + 
-                    STRING(THIS-OBJECT:SelectedDataRow["Address2"]) +
+                    STRING(this-object:SelectedDataRow["Address2"]) +
                     ", "               
                     .
                 
-                IF (THIS-OBJECT:SelectedDataRow["State"] NE ?)  AND (STRING(THIS-OBJECT:SelectedDataRow["State"]) NE "") THEN DO:
+                if (this-object:SelectedDataRow["State"] ne ?)  and (string(this-object:SelectedDataRow["State"]) ne "") then do:
                     address = address + 
-                        STRING(THIS-OBJECT:SelectedDataRow["State"]).
-                END.
+                        STRING(this-object:SelectedDataRow["State"]).
+                end.
                 
                 address = address + 
-                    STRING(THIS-OBJECT:SelectedDataRow["Country"]).
-            END.
+                    STRING(this-object:SelectedDataRow["Country"]).
+            end.
             
-            RETURN address.
-        END GET.
+            return address.
+        end get.
     
-    DEFINE PUBLIC PROPERTY SelectedDataRow AS DataRowView NO-UNDO 
-        GET.
-        SET.
+    define public property SelectedDataRow as DataRowView no-undo 
+        get.
+        set.
 
-    DEFINE PUBLIC PROPERTY CustomersDataTable AS DataTable NO-UNDO 
-        GET.
-        SET.
+    define public property CustomersDataTable as DataTable no-undo 
+        get.
+        private set.
 
-    CONSTRUCTOR PUBLIC CustomerWindowViewModel (  ):
-        SUPER ().
+    constructor public CustomerWindowViewModel (  ):
+        super ().
         
-        THIS-OBJECT:oSportsDataServiceClient = NEW ServiceClient("Production").
+        this-object:oSportsDataServiceClient = new ServiceClient("Production").
         
-    END CONSTRUCTOR.
+    end constructor.
     
-    METHOD PUBLIC VOID RefreshCustomers():
+    method public void RefreshCustomers():
       
-        ASSIGN THIS-OBJECT:CustomersDataTable = THIS-OBJECT:oSportsDataServiceClient:GetCustomers().
+        assign this-object:CustomersDataTable = this-object:oSportsDataServiceClient:GetCustomers().
   
-    END METHOD.
+    end method.
     
-    METHOD PUBLIC VOID SaveSelectedCustomer():
-      THIS-OBJECT:oSportsDataServiceClient:SaveCustomer(THIS-OBJECT:SelectedDataRow).
+    method public void SaveSelectedCustomer():
+      this-object:oSportsDataServiceClient:SaveCustomer(this-object:SelectedDataRow).
         
-    END METHOD.
+    end method.
 
-END CLASS.
+end class.
