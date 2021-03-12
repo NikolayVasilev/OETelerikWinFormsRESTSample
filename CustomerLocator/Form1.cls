@@ -332,7 +332,6 @@ class Form1 inherits Form:
         
         // INSERT YOUR BING MAPS KEY HERE
         bingProvider:BingKey = "REPLACE_THIS_WITH_YOUR_BING_MAPS_KEY".
-        bingProvider:BingKey = "Audxd9rehcmI76cwkNYHhCNgkbQxsCmccC0-M4f6oc66VQOxMLhZluCSwi10PSp_".
         
         cache = new LocalFileCacheProvider(cacheFolder).
         bingProvider:CacheProvider = cache.
